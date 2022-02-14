@@ -11,8 +11,11 @@ Welcome to Raspinet's documentation!
    :caption: Contents:
 
 ====================================
-[![Documentation Status](https://readthedocs.org/projects/raspinet/badge/?version=latest)](https://raspinet.readthedocs.io/en/latest/?badge=latest)
 
+.. image:: https://readthedocs.org/projects/raspinet/badge/?version=latest
+   :target: https://raspinet.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
+====================================
 Indices and tables
 ==================
 
