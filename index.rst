@@ -10,7 +10,8 @@ Welcome to Raspinet's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
+====================================
+[![Documentation Status](https://readthedocs.org/projects/raspinet/badge/?version=latest)](https://raspinet.readthedocs.io/en/latest/?badge=latest)
 
 Indices and tables
 ==================
