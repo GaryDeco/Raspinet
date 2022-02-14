@@ -16,6 +16,7 @@ Welcome to Raspinet's documentation!
    :target: https://raspinet.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 ====================================
+
 Indices and tables
 ==================
 
