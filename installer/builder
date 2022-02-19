@@ -1,0 +1,37 @@
+#!/bin/bash
+
+echo "
+Built for...
+
+   ;d0KOd.  .oOK0x:  
+ 0xlllcoxolkolllloX 
+  ;OccloddKNdxdocckc 
+   .dkddkWNNMOdoxd,  
+   .o:,x0....xd,ck'  
+   K:xOoloOOccloocW  
+ .x;N:....xO....'K;k,
+ O..Nc...:XNl...:X.,X
+ .kkx0NXk'...dNNxldK'
+  'k...0o....,O...d: 
+   ;o;'oM0olkWc.;oc  
+     .cOx....dOl.    
+        .x00k.  
+
+GNU/Linux aarch64 5.10.92-v8+
+
+"
+echo "
+Note: After configuration is complete, bluetooth and wifi will be disabled
+
+Use 
+
+"
+echo "Installing packages..."
+
+
+sudo apt-get -y update && sudo apt-get -y upgrade
+
+sudo apt-get -y whiptail
+
+sudo apt-get -y figlet
+
