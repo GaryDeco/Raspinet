@@ -29,9 +29,9 @@ Use
 echo "Installing packages..."
 
 
-sudo apt-get -y update && sudo apt-get -y upgrade
+#sudo apt-get -y update && sudo apt-get -y upgrade (tested)
 
-sudo apt-get -y whiptail
+sudo apt-get install -y whiptail
 
-sudo apt-get -y figlet
+sudo apt-get install -y figlet
 
