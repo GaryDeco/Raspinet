@@ -38,7 +38,7 @@ if service ssh status | grep -q inactive; then
     echo "Enabling SSH..."
     ssh-keygen -A &&
     update-rc.d ssh enable &&
-    invoke-rc.d ssh start &&
+    invoke-rc.d ssh start 
 else
     echo "SSH is already enabled... Moving on"
 fi
@@ -55,4 +55,9 @@ sudo apt-get install -y whiptail
 sudo apt-get install -y figlet
 
 # reboot the system
+echo ""
+echo "Installation complete..."
+sleep 1
+echo "Rebooting..."
+sleep 2
 sudo reboot
