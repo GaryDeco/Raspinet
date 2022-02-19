@@ -53,3 +53,6 @@ sudo apt-get -y dist-upgrade
 # install dependencies
 sudo apt-get install -y whiptail
 sudo apt-get install -y figlet
+
+# reboot the system
+sudo reboot
