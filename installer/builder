@@ -110,6 +110,14 @@ sleep 1
 sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/piscan.sh
 sleep 1
 
+# move files and give permissions
+sudo mv filemanager raspinet/bin/
+sudo chmod 777 raspinet/bin/filemanager
+sudo mv linker raspinet/bin/
+sudo chmod 777 raspinet/bin/linker
+sudo mv piscan.sh raspinet/bin/
+sudo chmod 777 raspinet/bin/piscan.sh
+
 # discovery folder
 
 #TODO Add scripts
@@ -130,4 +138,4 @@ echo "Installation complete..."
 sleep 1
 echo "Rebooting..."
 sleep 2
-#sudo reboot
+sudo reboot
