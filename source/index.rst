@@ -13,8 +13,8 @@ Welcome to Raspinet's documentation!
    :caption: Contents:
 
 .. image:: https://readthedocs.org/projects/raspinet/badge/?version=latest
-:target: https://raspinet.readthedocs.io/en/latest/?badge=latest
-:alt: Documentation Status
+   :target: https://raspinet.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
 
 Indices and tables
 ==================
