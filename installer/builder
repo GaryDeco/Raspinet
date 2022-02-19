@@ -74,7 +74,7 @@ sudo apt-get install -y ndiff
 # symlinks
 
 ############################## Clean up dirs ##################################
-# remove unecessary stuff
+# remove unecessary stuff #TODO fix this with if statement 
 sudo rm -rf Bookshelf/
 sudo rm -rf Documents/
 sudo rm -rf Downloads/
@@ -85,7 +85,7 @@ sudo rm -rf Templates/
 sudo rm -rf Videos/
 echo " Cleaned out some junk..."
 ############################## Add dirs ##################################
-# make sure we are in the right dir
+# make sure we are in the right dir #TODO combine and simplfy
 echo "Adding some directories..."
 sudo mkdir -p raspinet/bin && 
 sudo mkdir raspinet/discovery &&
