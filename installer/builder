@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "
-Built for...
+Built for 64-bit Raspberry Pi OS...
 
    ;d0KOd.  .oOK0x:  
  0xlllcoxolkolllloX 
@@ -45,11 +45,11 @@ else
     echo "SSH is already enabled... Moving on"
 fi
 ######################### Disable Wi-Fi and bluetooth #########################
-
+# disable transmisson capability (persists after reboot, reverse with unblock command)
 sudo rfkill block wifi && sudo rfkill block bluetooth
 
 ############################# update and ugrade ################################
-#  
+#  may disable when stable version is complete
 sudo apt-get -y update && sudo apt-get -y upgrade
 sudo apt-get -y dist-upgrade 
 
@@ -59,7 +59,7 @@ echo "Installing basic packages..."
 sudo apt-get install -y whiptail
 sudo apt-get install -y figlet
 sudo apt-get install -y nmap
-sudo apt-get install -y zenmap
+sudo apt-get install -y ndiff
 
 
 # more complicated installs
@@ -77,8 +77,26 @@ sudo apt-get install -y zenmap
 
 ############################## Clean up dirs ##################################
 # remove unecessary stuff
+sudo rm -rf $HOME/Bookshelf
+sudo rm -rf $HOME/Documents
+sudo rm -rf $HOME/Downloads
+sudo rm -rf $HOME/Music
+sudo rm -rf $HOME/Pictures
+sudo rm -rf $HOME/Public
+sudo rm -rf $HOME/Templates
+sudo rm -rf $HOME/Videos
+############################## Add dirs ##################################
+
+
+
 
 ############################### End of Config ##################################
+# final house keeping
+echo "Cleaning up..."
+sudo rm builder
+sleep 1
+echo ""
+echo "Done"
 # reboot the system
 echo ""
 echo "Installation complete..."
