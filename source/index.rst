@@ -6,11 +6,15 @@
 Welcome to Raspinet's documentation!
 ====================================
 
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-
+.. image:: https://readthedocs.org/projects/raspinet/badge/?version=latest
+:target: https://raspinet.readthedocs.io/en/latest/?badge=latest
+:alt: Documentation Status
 
 Indices and tables
 ==================
