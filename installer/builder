@@ -20,20 +20,22 @@ Built for...
 GNU/Linux aarch64 5.10.92-v8+
 
 "
+sleep 3
 echo "Note: After configuration is complete, bluetooth and wifi will be disabled
 
 System will auto-reboot at completion...
-
 "
+
 echo "Getting system info..."
 cat /proc/cpuinfo
 
 echo ""
-
+sleep 2
 # give permissions to build script (only write is necessary)
 sudo chmod 777 builder
 
-# enable ssh
+################################# enable ssh ###################################
+
 if service ssh status | grep -q inactive; then
     echo "Enabling SSH..."
     ssh-keygen -A &&
@@ -42,18 +44,41 @@ if service ssh status | grep -q inactive; then
 else
     echo "SSH is already enabled... Moving on"
 fi
+######################### Disable Wi-Fi and bluetooth #########################
 
-# install packages
-echo "Installing packages..."
+sudo rfkill block wifi && sudo rfkill block bluetooth
 
-# update and ugrade 
+############################# update and ugrade ################################
+#  
 sudo apt-get -y update && sudo apt-get -y upgrade
 sudo apt-get -y dist-upgrade 
 
-# install dependencies
+########################### install dependencies ################################
+# basic installs
+echo "Installing basic packages..."
 sudo apt-get install -y whiptail
 sudo apt-get install -y figlet
+sudo apt-get install -y nmap
+sudo apt-get install -y zenmap
 
+
+# more complicated installs
+
+############################## configurations #####################################
+# wake-switch and LED
+
+# network connection LED
+
+# web server
+
+############################## Link files #####################################
+# symlinks
+
+
+############################## Clean up dirs ##################################
+# remove unecessary stuff
+
+############################### End of Config ##################################
 # reboot the system
 echo ""
 echo "Installation complete..."
