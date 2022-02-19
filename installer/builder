@@ -20,18 +20,36 @@ Built for...
 GNU/Linux aarch64 5.10.92-v8+
 
 "
-echo "
-Note: After configuration is complete, bluetooth and wifi will be disabled
+echo "Note: After configuration is complete, bluetooth and wifi will be disabled
 
-Use 
+System will auto-reboot at completion...
 
 "
+echo "Getting system info..."
+cat /proc/cpuinfo
+
+echo ""
+
+# give permissions to build script (only write is necessary)
+sudo chmod 777 builder
+
+# enable ssh
+if service ssh status | grep -q inactive; then
+    echo "Enabling SSH..."
+    ssh-keygen -A &&
+    update-rc.d ssh enable &&
+    invoke-rc.d ssh start &&
+else
+    echo "SSH is already enabled... Moving on"
+fi
+
+# install packages
 echo "Installing packages..."
 
+# update and ugrade 
+sudo apt-get -y update && sudo apt-get -y upgrade
+sudo apt-get -y dist-upgrade 
 
-#sudo apt-get -y update && sudo apt-get -y upgrade (tested)
-
+# install dependencies
 sudo apt-get install -y whiptail
-
 sudo apt-get install -y figlet
-
