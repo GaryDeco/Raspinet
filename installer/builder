@@ -85,14 +85,18 @@ sudo rm -rf $HOME/Pictures
 sudo rm -rf $HOME/Public
 sudo rm -rf $HOME/Templates
 sudo rm -rf $HOME/Videos
+echo " Cleaned out some junk..."
 ############################## Add dirs ##################################
-
-
-
+# make sure we are in the right dir
+echo "Adding some directories..."
+cd $HOME
+sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet 
+echo "Done"
+sleep 1
 
 ############################### End of Config ##################################
 # final house keeping
-echo "Cleaning up..."
+echo "Covering tracks..."
 sudo rm builder
 sleep 1
 echo ""
