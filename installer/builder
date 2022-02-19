@@ -77,20 +77,33 @@ sudo apt-get install -y ndiff
 
 ############################## Clean up dirs ##################################
 # remove unecessary stuff
-sudo rm -rf $HOME/Bookshelf
-sudo rm -rf $HOME/Documents
-sudo rm -rf $HOME/Downloads
-sudo rm -rf $HOME/Music
-sudo rm -rf $HOME/Pictures
-sudo rm -rf $HOME/Public
-sudo rm -rf $HOME/Templates
-sudo rm -rf $HOME/Videos
+sudo rm -rf Bookshelf/
+sudo rm -rf Documents/
+sudo rm -rf Downloads/
+sudo rm -rf Music/
+sudo rm -rf Pictures/
+sudo rm -rf Public/
+sudo rm -rf Templates/
+sudo rm -rf Videos/
+
 echo " Cleaned out some junk..."
 ############################## Add dirs ##################################
 # make sure we are in the right dir
 echo "Adding some directories..."
-cd $HOME
-sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet 
+sudo mkdir -p raspinet/bin && 
+sudo mkdir raspinet/discovery &&
+sudo mkdir raspinet/discovery/hosts && 
+sudo mkdir raspinet/discovery/ports &&
+sudo mkdir raspinet/discovery/services
+sudo chmod 777 raspinet &&
+sudo chmod 777 raspinet/bin &&
+sudo chmod 777 raspinet/discovery &&
+sudo chmod 777 raspinet/discovery/hosts &&
+sudo chmod 777 raspinet/discovery/ports &&
+sudo chmod 777 raspinet/discovery/services
+
+#sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/ 
+
 echo "Done"
 sleep 1
 
