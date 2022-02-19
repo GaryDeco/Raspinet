@@ -85,7 +85,6 @@ sudo rm -rf Pictures/
 sudo rm -rf Public/
 sudo rm -rf Templates/
 sudo rm -rf Videos/
-
 echo " Cleaned out some junk..."
 ############################## Add dirs ##################################
 # make sure we are in the right dir
@@ -102,7 +101,18 @@ sudo chmod 777 raspinet/discovery/hosts &&
 sudo chmod 777 raspinet/discovery/ports &&
 sudo chmod 777 raspinet/discovery/services
 
-#sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/ 
+echo "Getting some scripts..."
+# bin folder
+sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/filemanager
+sleep 1
+sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/linker
+sleep 1
+sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/piscan.sh
+sleep 1
+
+# discovery folder
+
+#TODO Add scripts
 
 echo "Done"
 sleep 1
@@ -120,4 +130,4 @@ echo "Installation complete..."
 sleep 1
 echo "Rebooting..."
 sleep 2
-sudo reboot
+#sudo reboot
