@@ -3,7 +3,7 @@
 # terminal colors
 RED="\033[31m"
 GRN="\033[32m"
-CLR="\e[0m""
+CLR="\e[0m"
 
 echo "
 Built for 64-bit Raspberry Pi OS...
