@@ -1,12 +1,16 @@
 #!/bin/bash
 
-# terminal colors
-RED="\033[31m"
-GRN="\033[32m"
-CLR="\e[0m"
+###########################################################################################
+# Author: Gary Decosmo
+# Date created: 2/19/2022
+# Updated: 3/10/2022
+# Description: Install script for raspinet scanner
+# This script needs refinement, it has been tested and is working. 
+# run this script on a fresh install of a raspbian OS to build the scanner enviornment. 
+###########################################################################################
 
 echo "
-Built for 64-bit Raspberry Pi OS...
+Built for 32-bit Raspberry Pi OS (Bullseye)...
 
          ;d0KOd.  .oOK0x:  
         0xlllcoxolkolllloX 
@@ -35,7 +39,6 @@ DEF_USER="pi"
 PASSWD="campbell"
 HOSTNAME="raspinet"
 CONFIG=/boot/config.txt # main config file
-
 
 sleep 3
 echo "Note: After configuration is complete, bluetooth and wifi will be disabled
@@ -72,6 +75,7 @@ else
 fi
 echo ""
 sleep 1
+
 ######################### Disable Wi-Fi and bluetooth #########################
 # disable transmisson capability (persists after reboot, reverse with unblock command)
 sudo rfkill block wifi && sudo rfkill block bluetooth # disable wifi and disable bluetooth
@@ -101,8 +105,6 @@ sudo pip install argparse
 sudo pip install python-libnmap
 sleep 1
 
-# more complicated installs
-
 ############################## configurations #####################################
 #------ Locale -------#
 echo "Updating locale..."
@@ -127,7 +129,6 @@ sleep 1
 echo "Changing Wi-Fi Country to US..."
 echo ""
 sleep 1
-echo ""
 echo "Changing hostname..."
 echo ""
 sed -i 's/raspberrypi/'$HOSTNAME'/g' /etc/hostname
@@ -148,6 +149,7 @@ sleep 1
 echo "Password successfully changed..."
 echo ""
 sleep 1
+
 ############################## Link files #####################################
 # symlinks #TODO symlinks need to be added
 
@@ -168,6 +170,7 @@ sudo rm -rf Videos/
 echo "Cleaned out some junk..."
 sleep 1
 echo ""
+
 ############################## Add dirs ##################################
 # make sure we are in the right dir #TODO combine and simplfy
 echo "Adding some directories..."
@@ -217,6 +220,7 @@ sleep 1
 echo "Done"
 sleep 1
 echo ""
+
 ############################### End of Config ##################################
 # final house keeping
 echo "Covering tracks..."
