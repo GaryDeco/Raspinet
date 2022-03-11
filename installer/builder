@@ -108,6 +108,7 @@ sleep 1
 
 ############################## configurations #####################################
 #------ Locale -------#
+echo ""
 echo "===> Updating locale..."
 sudo perl -pi -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
 sleep 1
