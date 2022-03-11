@@ -21,12 +21,16 @@ GNU/Linux aarch64 5.10.92-v8+
 
 "
 # -------------- Defs --------------#
-HOSTNAME="raspinet"
+
 TZ="America/Detroit"
 KBMODEL="pc101"
 KBLAYOUT="us"
 KBOPTIONS="lv3:ralt_alt"
+DEF_USER="pi"
 PASSWD="campbell"
+HOSTNAME="raspinet"
+CONFIG=/boot/config.txt # main config file
+
 
 sleep 3
 echo "Note: After configuration is complete, bluetooth and wifi will be disabled
@@ -123,12 +127,7 @@ printf "\\033[9;0]" >> /etc/issue
 echo ""
 echo "Changing password..."
 sleep 1
-su - pi # change to the pi user for this
-passwd 
-echo "raspberry" # default password
-echo $PASSWD # new password
-echo $PASSWD # one more time for confirmation
-sudo su # change back to superuser
+echo "$DEF_USER:$PASSWD" | sudo chpasswd
 echo "Password successfully changed..."
 echo ""
 sleep 1
