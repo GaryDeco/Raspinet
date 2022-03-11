@@ -165,7 +165,7 @@ sudo rm -rf Pictures/
 sudo rm -rf Public/
 sudo rm -rf Templates/
 sudo rm -rf Videos/
-echo " Cleaned out some junk..."
+echo "Cleaned out some junk..."
 sleep 1
 echo ""
 ############################## Add dirs ##################################
@@ -232,7 +232,5 @@ echo ""
 sleep 1
 echo "Rebooting..."
 echo ""
-sleep 1
-echo "Enjoy..."
 sleep 1
 sudo reboot
