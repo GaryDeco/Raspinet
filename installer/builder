@@ -117,22 +117,26 @@ sudo ln -s /usr/share/zoneinfo/$TZ /etc/localtime
 sudo rm /etc/timezone
 echo $TZ > /etc/timezone
 sudo timedatectl
+sleep 1
+echo ""
 echo "Timezone updated..."
 sleep 1
+echo ""
 echo "Changing keyboard to US"
 sudo sed -i 's/XKBMODEL=\"\w*"/XKBMODEL=\"'$KBMODEL'\"/g' /etc/default/keyboard
 sudo sed -i 's/XKBLAYOUT=\"\w*"/XKLAYOUT=\"'$KBLAYOUT'\"/g' /etc/default/keyboard
 sudo sed -i 's/XKBOPTIONS=\"\w*"/XKBOPTIONS=\"'$KBMODEL'\"/g' /etc/default/keyboard
 echo "locale updates complete..."
-echo ""
 sleep 1
+echo ""
 echo "Changing Wi-Fi Country to US..."
-echo ""
 sleep 1
-echo "Changing hostname..."
 echo ""
+echo "Changing hostname..."
 sed -i 's/raspberrypi/'$HOSTNAME'/g' /etc/hostname
 sed -i 's/127.0.0.1\traspberrypi/127.0.0.1\t'$HOSTNAME'/g' /etc/hosts
+sleep 1
+echo ""
 echo "Hostname changed to $HOSTNAME"
 sleep 1
 echo ""
@@ -149,7 +153,6 @@ sleep 1
 echo "Password successfully changed..."
 echo ""
 sleep 1
-
 ############################## Link files #####################################
 # symlinks #TODO symlinks need to be added
 
@@ -157,8 +160,8 @@ sleep 1
 # remove unecessary stuff #TODO fix this with if statement 
 # TODO check behavior for if files do not exist
 echo "Building Rapinet environment..."
-sleep 1
 echo ""
+sleep 1
 sudo rm -rf Bookshelf/
 sudo rm -rf Documents/
 sudo rm -rf Downloads/
@@ -168,8 +171,8 @@ sudo rm -rf Public/
 sudo rm -rf Templates/
 sudo rm -rf Videos/
 echo "Cleaned out some junk..."
-sleep 1
 echo ""
+sleep 1
 
 ############################## Add dirs ##################################
 # make sure we are in the right dir #TODO combine and simplfy
