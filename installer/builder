@@ -124,10 +124,13 @@ echo "Diabling screen blanking..."
 sudo mkdir -p /etc/X11/xorg.conf.d/
 sudo cp /usr/share/raspi-config/10-blanking.conf /etc/X11/xorg.conf.d/
 printf "\\033[9;0]" >> /etc/issue
+sleep 1
 echo ""
 echo "Changing password..."
 sleep 1
 echo "$DEF_USER:$PASSWD" | chpasswd
+echo ""
+sleep 1
 echo "Password successfully changed..."
 echo ""
 sleep 1
