@@ -88,6 +88,7 @@ sudo apt-get insatll raspi-config
 
 ########################### install dependencies ################################
 # basic installs
+echo ""
 echo "===> Installing basic packages..."
 echo ""
 sleep 1
