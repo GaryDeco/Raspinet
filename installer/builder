@@ -8,19 +8,19 @@ CLR="\e[0m"
 echo "
 Built for 64-bit Raspberry Pi OS...
 
-  `$GRN`  ;d0KOd.  .oOK0x:  
+         ;d0KOd.  .oOK0x:  
         0xlllcoxolkolllloX 
           ;OccloddKNdxdocckc 
           .dkddkWNNMOdoxd,  
-          .o:,x0....xd,ck'  `$CLR`
-  `$RED`  K:xOoloOOccloocW  
+          .o:,x0....xd,ck'  
+          K:xOoloOOccloocW  
         .x;N:....xO....'K;k,
         O..Nc...:XNl...:X.,X
         .kkx0NXk'...dNNxldK'
           'k...0o....,O...d: 
           ;o;'oM0olkWc.;oc  
             .cOx....dOl.    
-                .x00k.  `$CLR`
+                .x00k.  
 
 GNU/Linux aarch64 5.10.92-v8+
 
