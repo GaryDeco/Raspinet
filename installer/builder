@@ -128,10 +128,13 @@ echo "===> Changing keyboard to US"
 sudo sed -i 's/XKBMODEL=\"\w*"/XKBMODEL=\"'$KBMODEL'\"/g' /etc/default/keyboard
 sudo sed -i 's/XKBLAYOUT=\"\w*"/XKLAYOUT=\"'$KBLAYOUT'\"/g' /etc/default/keyboard
 sudo sed -i 's/XKBOPTIONS=\"\w*"/XKBOPTIONS=\"'$KBMODEL'\"/g' /etc/default/keyboard
+sleep 1
+echo ""
 echo "===> locale updates complete..."
 sleep 1
 echo ""
 echo "===> Changing Wi-Fi Country to US..."
+#TODO complete this config
 sleep 1
 echo ""
 echo "===> Changing hostname..."
