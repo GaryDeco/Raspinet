@@ -96,6 +96,8 @@ sudo apt-get install -y whiptail # menu tool
 sudo apt-get install -y figlet # pretty display in CLI
 sudo apt-get install -y nmap # scanning the network
 sudo apt-get install -y ndiff # comparing scans
+sudo apt-get install -y rrdtool # for sampling temperature
+
 # --- Nodejs for web server --#
 sudo curl -fsSL https://deb.nodesource.com/setup_17.x | bash -
 sudo apt-get install -y nodejs
