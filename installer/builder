@@ -62,16 +62,16 @@ sleep 1
 
 ################################# enable ssh ###################################
 # --- check is SSH is enabled, if not, install it. 
-echo "Changing configs..."
+echo "===> Changing configs..."
 echo ""
 sleep 1
 if service ssh status | grep -q inactive; then
-    echo "Enabling SSH..."
+    echo "===> Enabling SSH..."
     ssh-keygen -A &&
     update-rc.d ssh enable &&
     invoke-rc.d ssh start 
 else
-    echo "SSH is already enabled... Moving on"
+    echo "===> SSH is already enabled... Moving on"
 fi
 echo ""
 sleep 1
@@ -88,7 +88,7 @@ sudo apt-get insatll raspi-config
 
 ########################### install dependencies ################################
 # basic installs
-echo "Installing basic packages..."
+echo "===> Installing basic packages..."
 echo ""
 sleep 1
 sudo apt-get install -y whiptail # menu tool
@@ -107,11 +107,11 @@ sleep 1
 
 ############################## configurations #####################################
 #------ Locale -------#
-echo "Updating locale..."
+echo "===> Updating locale..."
 sudo perl -pi -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
 sleep 1
 echo ""
-echo "Changing timezone..."
+echo "===> Changing timezone..."
 sudo rm /etc/localtime
 sudo ln -s /usr/share/zoneinfo/$TZ /etc/localtime
 sudo rm /etc/timezone
@@ -119,38 +119,38 @@ echo $TZ > /etc/timezone
 sudo timedatectl
 sleep 1
 echo ""
-echo "Timezone updated..."
+echo "===> Timezone updated..."
 sleep 1
 echo ""
-echo "Changing keyboard to US"
+echo "===> Changing keyboard to US"
 sudo sed -i 's/XKBMODEL=\"\w*"/XKBMODEL=\"'$KBMODEL'\"/g' /etc/default/keyboard
 sudo sed -i 's/XKBLAYOUT=\"\w*"/XKLAYOUT=\"'$KBLAYOUT'\"/g' /etc/default/keyboard
 sudo sed -i 's/XKBOPTIONS=\"\w*"/XKBOPTIONS=\"'$KBMODEL'\"/g' /etc/default/keyboard
-echo "locale updates complete..."
+echo "===> locale updates complete..."
 sleep 1
 echo ""
-echo "Changing Wi-Fi Country to US..."
+echo "===> Changing Wi-Fi Country to US..."
 sleep 1
 echo ""
-echo "Changing hostname..."
+echo "===> Changing hostname..."
 sed -i 's/raspberrypi/'$HOSTNAME'/g' /etc/hostname
 sed -i 's/127.0.0.1\traspberrypi/127.0.0.1\t'$HOSTNAME'/g' /etc/hosts
 sleep 1
 echo ""
-echo "Hostname changed to $HOSTNAME"
+echo "===> Hostname changed to $HOSTNAME"
 sleep 1
 echo ""
-echo "Diabling screen blanking..."
+echo "===> Diabling screen blanking..."
 sudo mkdir -p /etc/X11/xorg.conf.d/
 sudo cp /usr/share/raspi-config/10-blanking.conf /etc/X11/xorg.conf.d/
 printf "\\033[9;0]" >> /etc/issue
 sleep 1
 echo ""
-echo "Changing password..."
+echo "===> Changing password..."
 echo "$DEF_USER:$PASSWD" | chpasswd
 echo ""
 sleep 1
-echo "Password successfully changed..."
+echo "===> Password successfully changed..."
 echo ""
 sleep 1
 ############################## Link files #####################################
@@ -159,7 +159,7 @@ sleep 1
 ############################## Clean up dirs ##################################
 # remove unecessary stuff #TODO fix this with if statement 
 # TODO check behavior for if files do not exist
-echo "Building Rapinet environment..."
+echo "===> Building Rapinet environment..."
 echo ""
 sleep 1
 sudo rm -rf Bookshelf/
@@ -170,13 +170,13 @@ sudo rm -rf Pictures/
 sudo rm -rf Public/
 sudo rm -rf Templates/
 sudo rm -rf Videos/
-echo "Cleaned out some junk..."
+echo "===> Cleaned out some junk..."
 echo ""
 sleep 1
 
 ############################## Add dirs ##################################
 # make sure we are in the right dir #TODO combine and simplfy
-echo "Adding some directories..."
+echo "===> Adding some directories..."
 sudo mkdir -p raspinet/bin && 
 sudo mkdir raspinet/discovery &&
 sudo mkdir raspinet/discovery/hosts && 
@@ -190,7 +190,7 @@ sudo chmod 777 raspinet/discovery/ports &&
 sudo chmod 777 raspinet/discovery/services
 echo ""
 sleep 1
-echo "Getting some scripts..."
+echo "===> Getting some scripts..."
 # bin folder
 sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/filemanager
 sleep 1
@@ -199,10 +199,10 @@ sleep 1
 sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/piscan.sh
 sleep 1
 echo ""
-echo "Raspinet scripts installed..."
+echo "===> Raspinet scripts installed..."
 sleep 1
 echo ""
-echo "Relocating files..."
+echo "===> Relocating files..."
 sleep 1
 echo ""
 # move files and give permissions
@@ -213,31 +213,31 @@ sudo chmod 777 raspinet/bin/linker
 sudo mv piscan.sh raspinet/bin/
 sudo chmod 777 raspinet/bin/piscan.sh
 sleep 1
-echo "Files relocated..."
+echo "===> Files relocated..."
 echo ""
 sleep 1
 # discovery folder
 
 #TODO Add scripts
 
-echo "Done"
+echo "===> Done"
 sleep 1
 echo ""
 
 ############################### End of Config ##################################
 # final house keeping
-echo "Covering tracks..."
+echo "===> Covering tracks..."
 sudo rm builder
 sleep 1
 echo ""
-echo "Done"
+echo "===> Done"
 # reboot the system
 echo ""
 sleep 1
-echo "Installation complete..."
+echo "===> Installation complete..."
 echo ""
 sleep 1
-echo "Rebooting..."
+echo "===> Rebooting..."
 echo ""
 sleep 1
 sudo reboot
