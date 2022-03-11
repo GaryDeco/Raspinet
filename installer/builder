@@ -53,7 +53,7 @@ if [[ $EUID > 0 ]]
         exit
 fi
 
-echo "Getting system info..."
+echo "===> Getting system info..."
 #--- Display some system info --#
 cat /proc/cpuinfo
 
