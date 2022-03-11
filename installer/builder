@@ -26,6 +26,7 @@ TZ="America/Detroit"
 KBMODEL="pc101"
 KBLAYOUT="us"
 KBOPTIONS="lv3:ralt_alt"
+PASSWD="campbell"
 
 sleep 3
 echo "Note: After configuration is complete, bluetooth and wifi will be disabled
@@ -115,13 +116,26 @@ sed -i 's/127.0.0.1\traspberrypi/127.0.0.1\t'$HOSTNAME'/g' /etc/hosts
 echo "Hostname changed to $HOSTNAME"
 sleep 1
 echo ""
-
+echo "Diabling screen blanking..."
+sudo mkdir -p /etc/X11/xorg.conf.d/
+sudo cp /usr/share/raspi-config/10-blanking.conf /etc/X11/xorg.conf.d/
+printf "\\033[9;0]" >> /etc/issue
+echo ""
+echo "Changing password..."
+sleep 1
+sudo passwd $PASSWD &&
+echo "Password successfully changed..."
+echo ""
+sleep 1
 ############################## Link files #####################################
 # symlinks #TODO symlinks need to be added
 
 ############################## Clean up dirs ##################################
 # remove unecessary stuff #TODO fix this with if statement 
 # TODO check behavior for if files do not exist
+echo "Building Rapinet environment..."
+sleep 1
+echo ""
 sudo rm -rf Bookshelf/
 sudo rm -rf Documents/
 sudo rm -rf Downloads/
@@ -157,9 +171,12 @@ sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/
 sleep 1
 sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/piscan.sh
 sleep 1
+echo ""
 echo "Raspinet scripts installed..."
 sleep 1
+echo ""
 echo "Relocating files..."
+sleep 1
 echo ""
 # move files and give permissions
 sudo mv filemanager raspinet/bin/
@@ -191,5 +208,7 @@ echo ""
 echo "Installation complete..."
 sleep 1
 echo "Rebooting..."
-sleep 2
+sleep 1
+echo "Enjoy..."
+sleep 1
 sudo reboot
