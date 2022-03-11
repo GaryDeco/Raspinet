@@ -8,7 +8,7 @@ CLR="\e[0m""
 echo "
 Built for 64-bit Raspberry Pi OS...
 
-   $GRN  ;d0KOd.  .oOK0x:  
+    $GRN  ;d0KOd.  .oOK0x:  
         0xlllcoxolkolllloX 
           ;OccloddKNdxdocckc 
           .dkddkWNNMOdoxd,  
