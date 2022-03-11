@@ -123,7 +123,12 @@ printf "\\033[9;0]" >> /etc/issue
 echo ""
 echo "Changing password..."
 sleep 1
-sudo passwd pi $PASSWD &&
+su - pi # change to the pi user for this
+passwd 
+echo "raspberry" # default password
+echo $PASSWD # new password
+echo $PASSWD # one more time for confirmation
+sudo su # change back to superuser
 echo "Password successfully changed..."
 echo ""
 sleep 1
