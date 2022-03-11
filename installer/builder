@@ -8,19 +8,19 @@ CLR="\e[0m"
 echo "
 Built for 64-bit Raspberry Pi OS...
 
-    $GRN  ;d0KOd.  .oOK0x:  
+  `$GRN`  ;d0KOd.  .oOK0x:  
         0xlllcoxolkolllloX 
           ;OccloddKNdxdocckc 
           .dkddkWNNMOdoxd,  
-          .o:,x0....xd,ck'  $CLR
-    $RED  K:xOoloOOccloocW  
+          .o:,x0....xd,ck'  `$CLR`
+  `$RED`  K:xOoloOOccloocW  
         .x;N:....xO....'K;k,
         O..Nc...:XNl...:X.,X
         .kkx0NXk'...dNNxldK'
           'k...0o....,O...d: 
           ;o;'oM0olkWc.;oc  
             .cOx....dOl.    
-                .x00k.  $CLR
+                .x00k.  `$CLR`
 
 GNU/Linux aarch64 5.10.92-v8+
 
@@ -126,7 +126,7 @@ echo ""
 sleep 1
 echo "Changing Wi-Fi Country to US..."
 sleep 1
-
+echo ""
 echo "Changing hostname..."
 echo ""
 sed -i 's/raspberrypi/'$HOSTNAME'/g' /etc/hostname
@@ -166,7 +166,7 @@ sudo rm -rf Templates/
 sudo rm -rf Videos/
 echo " Cleaned out some junk..."
 sleep 1
-scho ""
+echo ""
 ############################## Add dirs ##################################
 # make sure we are in the right dir #TODO combine and simplfy
 echo "Adding some directories..."
@@ -215,7 +215,7 @@ sleep 1
 
 echo "Done"
 sleep 1
-
+echo ""
 ############################### End of Config ##################################
 # final house keeping
 echo "Covering tracks..."
@@ -225,6 +225,7 @@ echo ""
 echo "Done"
 # reboot the system
 echo ""
+sleep 1
 echo "Installation complete..."
 echo ""
 sleep 1
