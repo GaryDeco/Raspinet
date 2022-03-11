@@ -125,6 +125,7 @@ echo "locale updates complete..."
 echo ""
 sleep 1
 echo "Changing Wi-Fi Country to US..."
+echo ""
 sleep 1
 echo ""
 echo "Changing hostname..."
