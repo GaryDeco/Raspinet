@@ -25,17 +25,24 @@ echo "Note: After configuration is complete, bluetooth and wifi will be disabled
 
 System will auto-reboot at completion...
 "
+#--- Ensure this is being run as root ---#
+if [[ $EUID > 0 ]]
+        then echo "Please run this script as root, exiting..."
+        sleep 1
+        exit
+fi
 
 echo "Getting system info..."
+#--- Display some system info --#
 cat /proc/cpuinfo
 
 echo ""
-sleep 2
+sleep 1
 # give permissions to build script (only write is necessary)
-sudo chmod 777 builder
+sudo chmod 777 builder # 777 for dev purposes
 
 ################################# enable ssh ###################################
-
+# --- check is SSH is enabled, if not, install it. 
 if service ssh status | grep -q inactive; then
     echo "Enabling SSH..."
     ssh-keygen -A &&
@@ -46,7 +53,7 @@ else
 fi
 ######################### Disable Wi-Fi and bluetooth #########################
 # disable transmisson capability (persists after reboot, reverse with unblock command)
-sudo rfkill block wifi && sudo rfkill block bluetooth
+sudo rfkill block wifi && sudo rfkill block bluetooth # disable wifi and disable bluetooth
 
 ############################# update and ugrade ################################
 #  may disable when stable version is complete
@@ -56,14 +63,24 @@ sudo apt-get -y dist-upgrade
 ########################### install dependencies ################################
 # basic installs
 echo "Installing basic packages..."
-sudo apt-get install -y whiptail
-sudo apt-get install -y figlet
-sudo apt-get install -y nmap
-sudo apt-get install -y ndiff
+sudo apt-get install -y whiptail # menu tool
+sudo apt-get install -y figlet # pretty display in CLI
+sudo apt-get install -y nmap # scanning the network
+sudo apt-get install -y ndiff # comparing scans
+
+# python scripts
+#---- For Parsing ----#
+sudo pip install argparse
+sudo pip install python-libnmap
+sleep 1
 
 # more complicated installs
 
 ############################## configurations #####################################
+# Locale
+echo "Updating locale..."
+perl -pi -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
+echo ""
 # wake-switch and LED
 
 # network connection LED
@@ -75,6 +92,7 @@ sudo apt-get install -y ndiff
 
 ############################## Clean up dirs ##################################
 # remove unecessary stuff #TODO fix this with if statement 
+# TODO check behavior for if files do not exist
 sudo rm -rf Bookshelf/
 sudo rm -rf Documents/
 sudo rm -rf Downloads/
@@ -107,7 +125,9 @@ sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/
 sleep 1
 sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/piscan.sh
 sleep 1
-
+echo "Raspinet scripts installed..."
+sleep 1
+echo "Relocating files..."
 # move files and give permissions
 sudo mv filemanager raspinet/bin/
 sudo chmod 777 raspinet/bin/filemanager
@@ -115,7 +135,9 @@ sudo mv linker raspinet/bin/
 sudo chmod 777 raspinet/bin/linker
 sudo mv piscan.sh raspinet/bin/
 sudo chmod 777 raspinet/bin/piscan.sh
-
+sleep 1
+echo "Files relocated..."
+sleep 1
 # discovery folder
 
 #TODO Add scripts
