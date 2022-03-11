@@ -127,7 +127,7 @@ printf "\\033[9;0]" >> /etc/issue
 echo ""
 echo "Changing password..."
 sleep 1
-echo "pi:campbell" | chpasswd
+echo "$DEF_USER:$PASSWD" | chpasswd
 echo "Password successfully changed..."
 echo ""
 sleep 1
