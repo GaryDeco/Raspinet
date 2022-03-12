@@ -10,7 +10,16 @@
 ###########################################################################################
 
 echo "
-Built for 32-bit Raspberry Pi OS (Bullseye)...
+Built on ...
+
+PRETTY_NAME = Raspbian GNU/Linux 10 (buster)
+NAME = Raspbian GNU/Linux 
+VERSION_ID = 10 
+VERSION = 10 (buster) 
+VERSION_CODENAME = buster
+ID = raspbian
+ID_LIKE = debian
+HOME_URL = http://www.raspbian.org/ 
 
          ;d0KOd.  .oOK0x:  
         0xlllcoxolkolllloX 
@@ -26,10 +35,12 @@ Built for 32-bit Raspberry Pi OS (Bullseye)...
             .cOx....dOl.    
                 .x00k.  
 
-GNU/Linux aarch64 5.10.92-v8+
-
 "
-# -------------- Defs --------------#
+#################### SETUP ###############################
+# for convenience
+spacer(){
+  echo ""; sleep 1
+}
 
 TZ="America/Detroit"
 KBMODEL="pc101"
@@ -39,13 +50,22 @@ DEF_USER="pi"
 PASSWD="campbell"
 HOSTNAME="raspinet"
 CONFIG=/boot/config.txt # main config file
+ARCH=$(dpkg --print-architecture)
 
-sleep 3
-echo "Note: After configuration is complete, bluetooth and wifi will be disabled
+# try to determine OS architecture
+if [ "$ARCH" = "armhf" ]; then
+  OS_ARCH="32-bit"
+elif [ "$ARCH" = "arm64" ]; then
+  OS_ARCH="64-bit"
+else
+  OS_ARCH="Unkown"
+fi
 
+echo "
+Note: After configuration is complete, bluetooth and wifi will be disabled
 System will auto-reboot at completion...
 "
-sleep 3
+spacer
 #--- Ensure this is being run as root ---#
 if [[ $EUID > 0 ]]
         then echo "Please run this script as root, exiting..."
@@ -56,15 +76,12 @@ fi
 echo "===> Getting system info..."
 #--- Display some system info --#
 cat /proc/cpuinfo
-
-echo ""
-sleep 1
+spacer
 
 ################################# enable ssh ###################################
 # --- check is SSH is enabled, if not, install it. 
 echo "===> Changing configs..."
-echo ""
-sleep 1
+spacer
 if service ssh status | grep -q inactive; then
     echo "===> Enabling SSH..."
     ssh-keygen -A &&
@@ -73,8 +90,7 @@ if service ssh status | grep -q inactive; then
 else
     echo "===> SSH is already enabled... Moving on"
 fi
-echo ""
-sleep 1
+spacer
 
 ######################### Disable Wi-Fi and bluetooth #########################
 # disable transmisson capability (persists after reboot, reverse with unblock command)
@@ -90,76 +106,69 @@ sudo apt-get insatll raspi-config
 # basic installs
 echo ""
 echo "===> Installing basic packages..."
-echo ""
-sleep 1
+spacer
+################################# OS TOOLS #####################################
 sudo apt-get install -y whiptail # menu tool
 sudo apt-get install -y figlet # pretty display in CLI
-sudo apt-get install -y nmap # scanning the network
-sudo apt-get install -y ndiff # comparing scans
 sudo apt-get install -y rrdtool # for sampling temperature
-
-# --- Nodejs for web server --#
+sudo apt-get install -y curl wget lynx w3m # ensure wget and curl are up to date and add lynx + w3m
+# --- Nodejs for web server --- #
 sudo curl -fsSL https://deb.nodesource.com/setup_17.x | bash -
 sudo apt-get install -y nodejs
-
-# python scripts
-#---- For Parsing ----#
+# --- python tools --- #
 sudo pip install argparse
 sudo pip install python-libnmap
-sleep 1
+############################### NETWORK TOOLS ####################################
+# zenmap is not working with 64-bit OS as of 3/2/2022, there may be a solution currently
+if [ $OS_ARCH = "32-bit" ]; then
+  sudo apt-get install -y zenmap
+else
+  echo "This OS has a $ARCH architecture, zenmap can not currently be installed"
+  spacer
+fi
+sudo apt-get install -y nmap # scanning the network
+sudo apt-get install -y ndiff # comparing scans
 
 ############################## configurations #####################################
 #------ Locale -------#
-echo ""
 echo "===> Updating locale..."
 sudo perl -pi -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
-sleep 1
-echo ""
+spacer
 echo "===> Changing timezone..."
 sudo rm /etc/localtime
 sudo ln -s /usr/share/zoneinfo/$TZ /etc/localtime
 sudo rm /etc/timezone
 echo $TZ > /etc/timezone
 sudo timedatectl
-sleep 1
-echo ""
+spacer
 echo "===> Timezone updated..."
-sleep 1
-echo ""
+spacer
 echo "===> Changing keyboard to US"
 sudo sed -i 's/XKBMODEL=\"\w*"/XKBMODEL=\"'$KBMODEL'\"/g' /etc/default/keyboard
 sudo sed -i 's/XKBLAYOUT=\"\w*"/XKLAYOUT=\"'$KBLAYOUT'\"/g' /etc/default/keyboard
 sudo sed -i 's/XKBOPTIONS=\"\w*"/XKBOPTIONS=\"'$KBMODEL'\"/g' /etc/default/keyboard
-sleep 1
-echo ""
+spacer
 echo "===> locale updates complete..."
-sleep 1
-echo ""
+spacer
 echo "===> Changing Wi-Fi Country to US..."
 #TODO complete this config
-sleep 1
-echo ""
+spacer
 echo "===> Changing hostname..."
 sed -i 's/raspberrypi/'$HOSTNAME'/g' /etc/hostname
 sed -i 's/127.0.0.1\traspberrypi/127.0.0.1\t'$HOSTNAME'/g' /etc/hosts
-sleep 1
-echo ""
+spacer
 echo "===> Hostname changed to $HOSTNAME"
-sleep 1
-echo ""
+spacer
 echo "===> Diabling screen blanking..."
 sudo mkdir -p /etc/X11/xorg.conf.d/
 sudo cp /usr/share/raspi-config/10-blanking.conf /etc/X11/xorg.conf.d/
 printf "\\033[9;0]" >> /etc/issue
-sleep 1
-echo ""
+spacer
 echo "===> Changing password..."
 echo "$DEF_USER:$PASSWD" | chpasswd
-echo ""
-sleep 1
+spacer
 echo "===> Password successfully changed..."
-echo ""
-sleep 1
+spacer
 ############################## Link files #####################################
 # symlinks #TODO symlinks need to be added
 
@@ -167,8 +176,7 @@ sleep 1
 # remove unecessary stuff #TODO fix this with if statement 
 # TODO check behavior for if files do not exist
 echo "===> Building Rapinet environment..."
-echo ""
-sleep 1
+espacer
 sudo rm -rf Bookshelf/
 sudo rm -rf Documents/
 sudo rm -rf Downloads/
@@ -178,10 +186,9 @@ sudo rm -rf Public/
 sudo rm -rf Templates/
 sudo rm -rf Videos/
 echo "===> Cleaned out some junk..."
-echo ""
-sleep 1
+spacer
 
-############################## Add dirs ##################################
+############################## ADDING DIRECTORIES ##################################
 # make sure we are in the right dir #TODO combine and simplfy
 echo "===> Adding some directories..."
 sudo mkdir -p raspinet/bin && 
@@ -195,8 +202,8 @@ sudo chmod 777 raspinet/discovery &&
 sudo chmod 777 raspinet/discovery/hosts &&
 sudo chmod 777 raspinet/discovery/ports &&
 sudo chmod 777 raspinet/discovery/services
-echo ""
-sleep 1
+spacer
+############################# SCRIPT INSTALLS ####################################
 echo "===> Getting some scripts..."
 # bin folder
 sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/filemanager
@@ -204,15 +211,14 @@ sleep 1
 sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/linker
 sleep 1
 sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/piscan.sh
-sleep 1
-echo ""
+spacer
 echo "===> Raspinet scripts installed..."
-sleep 1
-echo ""
+spacer
+
+######################### FILE RELOCATION AND PERMISSIONS #######################
 echo "===> Relocating files..."
-sleep 1
-echo ""
-# move files and give permissions
+spacer
+# --- move files and give permissions --- #
 sudo mv filemanager raspinet/bin/
 sudo chmod 777 raspinet/bin/filemanager
 sudo mv linker raspinet/bin/
@@ -221,30 +227,23 @@ sudo mv piscan.sh raspinet/bin/
 sudo chmod 777 raspinet/bin/piscan.sh
 sleep 1
 echo "===> Files relocated..."
-echo ""
-sleep 1
-# discovery folder
+spacer
 
+# --- discovery folder --- #
 #TODO Add scripts
-
 echo "===> Done"
-sleep 1
-echo ""
+spacer
 
 ############################### End of Config ##################################
 # final house keeping
 echo "===> Covering tracks..."
 sudo rm builder
-sleep 1
-echo ""
+spacer
 echo "===> Done"
 # reboot the system
-echo ""
-sleep 1
+spacer
 echo "===> Installation complete..."
-echo ""
-sleep 1
+spacer
 echo "===> Rebooting..."
-echo ""
-sleep 1
+spacer
 sudo reboot
