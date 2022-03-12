@@ -293,3 +293,4 @@ sudo reboot
 #TODO Organize with some functions
 #TODO Use flags for better management
 #TODO define requirements and dependencies in a seperate file?
+#TODO Add LED scripts and GPIO management
