@@ -7,6 +7,17 @@
 # Description: Install script for raspinet scanner
 # This script needs refinement, it has been tested and is working. 
 # run this script on a fresh install of a raspbian OS to build the scanner enviornment. 
+
+# This script is run with the following commands in the Rpi terminal
+# --- Switch to superuser --- #
+#$ sudo su
+# --- Fetch the build script --- #
+#$ wget --no-check-certificate --content-disposition https://raw.githubusercontent.com/Raspinet/main/installer/raspios_buster_armhf
+# --- Run the build script --- #
+# sudo bash raspios_buster_armhf
+
+# Everything should build and install. Note that this script needs some refinement, but it
+# does work for me currently on the latest 32-bit buster OS (10) from the raspberry pi website. 
 ###########################################################################################
 
 echo "
@@ -49,6 +60,7 @@ KBOPTIONS="lv3:ralt_alt"
 DEF_USER="pi"
 PASSWD="campbell"
 HOSTNAME="raspinet"
+ROOTSSH="PermitRootLogin yes"
 CONFIG=/boot/config.txt # main config file
 ARCH=$(dpkg --print-architecture)
 
@@ -78,7 +90,7 @@ echo "===> Getting system info..."
 cat /proc/cpuinfo
 spacer
 
-################################# enable ssh ###################################
+################################# SSH ###################################
 # --- check is SSH is enabled, if not, install it. 
 echo "===> Changing configs..."
 spacer
@@ -87,9 +99,19 @@ if service ssh status | grep -q inactive; then
     ssh-keygen -A &&
     update-rc.d ssh enable &&
     invoke-rc.d ssh start 
+    spacer
+    # -------------------------------------------#
+    # added to enable root ssh login (3/12/2022)
+    #TODO tranfer all fixes to another file
+    echo "===> Allowing root ssh login"
+    echo $ROOTSSH >> /etc/ssh/sshd_config
+    spacer
+    echo "===> Restarting ssh service..."
+    sudo service ssh restart 
 else
     echo "===> SSH is already enabled... Moving on"
 fi
+
 spacer
 
 ######################### Disable Wi-Fi and bluetooth #########################
@@ -119,9 +141,11 @@ sudo apt-get install -y nodejs
 sudo pip install argparse
 sudo pip install python-libnmap
 ############################### NETWORK TOOLS ####################################
-# zenmap is not working with 64-bit OS as of 3/2/2022, there may be a solution currently
+# removed zenmap it is not working with 64-bit or 32-bit OS as of 3/2/2022, there may be a solution 
 if [ $OS_ARCH = "32-bit" ]; then
-  sudo apt-get install -y zenmap
+  echo "This OS has a $ARCH architecture"
+  #sudo apt-get install -y zenmap
+  spacer
 else
   echo "This OS has a $ARCH architecture, zenmap can not currently be installed"
   spacer
@@ -155,7 +179,23 @@ echo "===> Changing Wi-Fi Country to US..."
 spacer
 echo "===> Changing hostname..."
 sed -i 's/raspberrypi/'$HOSTNAME'/g' /etc/hostname
-sed -i 's/127.0.0.1\traspberrypi/127.0.0.1\t'$HOSTNAME'/g' /etc/hosts
+sed -i 's/127.0.0.1\traspberrypi/127.0.0.1\t'$HOSTNAME'/g' /etc/hosts # not working
+
+#---------------------------------------------------------------#
+# hostname was not properly updated to /etc/hosts (3/12/2022)
+#TODO add this with other fixes to a seperate file
+fix_hostname(){
+cat << EOF
+127.0..0.1    localhost
+::1           localhost ip6-localhost ip6-loopback
+ff02::1       ip6-allnodes
+ff02::2       ip6-allrouters
+
+127.0.1.1     $HOSTNAME
+EOF
+}
+fix_hostname > /etc/hosts
+#--------------------------------------------------------------#
 spacer
 echo "===> Hostname changed to $HOSTNAME"
 spacer
@@ -166,6 +206,7 @@ printf "\\033[9;0]" >> /etc/issue
 spacer
 echo "===> Changing password..."
 echo "$DEF_USER:$PASSWD" | chpasswd
+echo "root:$PASSWD" | chpasswd # also change root password for ssh login
 spacer
 echo "===> Password successfully changed..."
 spacer
@@ -247,3 +288,8 @@ spacer
 echo "===> Rebooting..."
 spacer
 sudo reboot
+
+############################### More To-Do's ##################################
+#TODO Organize with some functions
+#TODO Use flags for better management
+#TODO define requirements and dependencies in a seperate file?
