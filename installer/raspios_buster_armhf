@@ -179,7 +179,7 @@ echo "===> Changing Wi-Fi Country to US..."
 spacer
 echo "===> Changing hostname..."
 echo $HOSTNAME > /etc/hostname
-
+echo "Hostname update in /etc/hostname"
 #---------------------------------------------------------------#
 # hostname was not properly updated to /etc/hosts (3/12/2022)
 #TODO add this with other fixes to a seperate file
