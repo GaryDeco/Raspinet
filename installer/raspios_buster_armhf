@@ -133,6 +133,7 @@ spacer
 sudo apt-get install -y whiptail # menu tool
 sudo apt-get install -y figlet # pretty display in CLI
 sudo apt-get install -y rrdtool # for sampling temperature
+sudo apt-get install -y git # ensure git is installed
 sudo apt-get install -y curl wget lynx w3m # ensure wget and curl are up to date and add lynx + w3m
 # --- Nodejs for web server --- #
 sudo curl -fsSL https://deb.nodesource.com/setup_17.x | bash -
@@ -284,6 +285,13 @@ echo "===> Done"
 # reboot the system
 spacer
 echo "===> Installation complete..."
+spacer
+echo "===>Installing power-switch..."
+git clone https://github.com/GaryDeco/RetroPie-Power-Switch.git
+cd RetroPie-Power-Switch/script/
+bash install
+spacer
+echo "===> Power-switch added..."
 spacer
 echo "===> Rebooting..."
 spacer
