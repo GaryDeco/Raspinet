@@ -218,7 +218,7 @@ spacer
 # remove unecessary stuff #TODO fix this with if statement 
 # TODO check behavior for if files do not exist
 echo "===> Building Rapinet environment..."
-espacer
+spacer
 sudo rm -rf Bookshelf/
 sudo rm -rf Documents/
 sudo rm -rf Downloads/
@@ -253,6 +253,10 @@ sleep 1
 sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/linker
 sleep 1
 sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/piscan.sh
+sleep 1
+sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/power_switch.py
+sleep 1
+sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/power_switch.sh 
 spacer
 echo "===> Raspinet scripts installed..."
 spacer
@@ -267,6 +271,15 @@ sudo mv linker raspinet/bin/
 sudo chmod 777 raspinet/bin/linker
 sudo mv piscan.sh raspinet/bin/
 sudo chmod 777 raspinet/bin/piscan.sh
+
+# -------------------------------- Enable power switch ------------------------------------ #
+sudo mv power_switch.py /usr/local/bin/          # move to local/bin
+sudo chmod +x /usr/local/bin/power_switch.py     # give write permissions
+sudo mv power_switch.sh /etc/init.d/             # move service to init.d to enable on boot
+sudo chmod +x /etc/init.d/power_switch.sh        # give the service script write permissions
+sudo update-rc.d power_switch.sh defaults        # enable the service
+sudo /etc/init.d/power_switch.sh start           # start the service
+# ------------------------------------------------------------------------------------------ #
 sleep 1
 echo "===> Files relocated..."
 spacer
@@ -287,12 +300,14 @@ spacer
 echo "===> Installation complete..."
 spacer
 echo "===>Installing power-switch..."
+# ---------------- Adding wake button from my arcade project ----------------- #
 git clone https://github.com/GaryDeco/RetroPie-Power-Switch.git
 cd RetroPie-Power-Switch/script/
 bash install
 spacer
 echo "===> Power-switch added..."
 spacer
+# ---------------------------------------------------------------------------#
 echo "===> Rebooting..."
 spacer
 sudo reboot 
