@@ -58,6 +58,7 @@ KBMODEL="pc101"
 KBLAYOUT="us"
 KBOPTIONS="lv3:ralt_alt"
 DEF_USER="pi"
+THIS_USER=$(echo whoami)
 PASSWD="campbell"
 HOSTNAME="raspinet"
 ROOTSSH="PermitRootLogin yes"
@@ -207,7 +208,7 @@ printf "\\033[9;0]" >> /etc/issue
 spacer
 echo "===> Changing password..."
 echo "$DEF_USER:$PASSWD" | chpasswd
-echo "root:$PASSWD" | chpasswd # also change root password for ssh login
+echo "$THIS_USER:$PASSWD" | chpasswd # also change root password for ssh login
 spacer
 echo "===> Password successfully changed..."
 spacer
@@ -253,10 +254,6 @@ sleep 1
 sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/linker
 sleep 1
 sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/piscan.sh
-sleep 1
-sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/power_switch.py
-sleep 1
-sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/power_switch.sh 
 spacer
 echo "===> Raspinet scripts installed..."
 spacer
@@ -272,14 +269,6 @@ sudo chmod 777 raspinet/bin/linker
 sudo mv piscan.sh raspinet/bin/
 sudo chmod 777 raspinet/bin/piscan.sh
 
-# -------------------------------- Enable power switch ------------------------------------ #
-sudo mv power_switch.py /usr/local/bin/          # move to local/bin
-sudo chmod +x /usr/local/bin/power_switch.py     # give write permissions
-sudo mv power_switch.sh /etc/init.d/             # move service to init.d to enable on boot
-sudo chmod +x /etc/init.d/power_switch.sh        # give the service script write permissions
-sudo update-rc.d power_switch.sh defaults        # enable the service
-sudo /etc/init.d/power_switch.sh start           # start the service
-# ------------------------------------------------------------------------------------------ #
 sleep 1
 echo "===> Files relocated..."
 spacer
@@ -299,10 +288,23 @@ echo "===> Done"
 spacer
 echo "===> Installation complete..."
 spacer
-echo "===>Installing power-switch..."
-# ---------------- Adding wake button from my arcade project ----------------- #
+
+# ------------- Adding RPi wake button script from my arcade project -------------- #
+echo "===> Installing power-switch..."
 spacer
-# ---------------------------------------------------------------------------#
+git clone https://github.com/GaryDeco/RetroPie-Power-Switch.git
+cd RetroPie-Power-Switch/script/
+bash install
+spacer
+echo "===> Installed power switch"
+spacer
+echo "===> Cleaning up directory..."
+spacer
+cd /home/pi/raspinet
+sudo rm -rf RetroPie-Power-Switch
+echo "===> All done!..."
+spacer
+# ----------------------------------------------------------------------------------#
 echo "===> Rebooting..."
 spacer
 sudo reboot 
