@@ -98,7 +98,7 @@ if service ssh status | grep -q inactive; then
     echo "===> Enabling SSH..."
     ssh-keygen -A &&
     update-rc.d ssh enable &&
-    invoke-rc.d ssh start >> 
+    invoke-rc.d ssh start 
     spacer
     # -------------------------------------------#
     # added to enable root ssh login (3/12/2022)
