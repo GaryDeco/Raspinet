@@ -178,8 +178,9 @@ echo "===> Changing Wi-Fi Country to US..."
 #TODO complete this config
 spacer
 echo "===> Changing hostname..."
+spacer
 echo $HOSTNAME > /etc/hostname
-echo "Hostname update in /etc/hostname"
+echo "===> Hostname update in /etc/hostname"
 #---------------------------------------------------------------#
 # hostname was not properly updated to /etc/hosts (3/12/2022)
 #TODO add this with other fixes to a seperate file
@@ -277,7 +278,7 @@ spacer
 ############################### End of Config ##################################
 # final house keeping
 echo "===> Covering tracks..."
-sudo rm raspinet_buster_armhf
+sudo rm raspios_buster_armhf
 spacer
 echo "===> Done"
 # reboot the system
