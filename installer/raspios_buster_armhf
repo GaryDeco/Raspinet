@@ -286,7 +286,8 @@ spacer
 echo "===> Installation complete..."
 spacer
 echo "===> Rebooting..."
-
+spacer
+sudo reboot 
 
 ############################### More To-Do's ##################################
 #TODO Organize with some functions
