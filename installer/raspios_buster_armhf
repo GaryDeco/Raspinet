@@ -98,7 +98,7 @@ if service ssh status | grep -q inactive; then
     echo "===> Enabling SSH..."
     ssh-keygen -A &&
     update-rc.d ssh enable &&
-    invoke-rc.d ssh start 
+    invoke-rc.d ssh start >> 
     spacer
     # -------------------------------------------#
     # added to enable root ssh login (3/12/2022)
@@ -178,8 +178,7 @@ echo "===> Changing Wi-Fi Country to US..."
 #TODO complete this config
 spacer
 echo "===> Changing hostname..."
-sed -i 's/raspberrypi/'$HOSTNAME'/g' /etc/hostname
-sed -i 's/127.0.0.1\traspberrypi/127.0.0.1\t'$HOSTNAME'/g' /etc/hosts # not working
+echo $HOSTNAME > /etc/hostname
 
 #---------------------------------------------------------------#
 # hostname was not properly updated to /etc/hosts (3/12/2022)
@@ -278,7 +277,7 @@ spacer
 ############################### End of Config ##################################
 # final house keeping
 echo "===> Covering tracks..."
-sudo rm builder
+sudo rm raspinet_buster_armhf
 spacer
 echo "===> Done"
 # reboot the system
