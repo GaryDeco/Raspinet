@@ -58,7 +58,7 @@ KBMODEL="pc101"
 KBLAYOUT="us"
 KBOPTIONS="lv3:ralt_alt"
 DEF_USER="pi"
-THIS_USER=$(echo whoami)
+ROOT_USER="root"
 PASSWD="campbell"
 HOSTNAME="raspinet"
 ROOTSSH="PermitRootLogin yes"
@@ -208,7 +208,7 @@ printf "\\033[9;0]" >> /etc/issue
 spacer
 echo "===> Changing password..."
 echo "$DEF_USER:$PASSWD" | chpasswd
-echo "$THIS_USER:$PASSWD" | chpasswd # also change root password for ssh login
+echo "$ROOT_USER:$PASSWD" | chpasswd # also change root password for ssh login
 spacer
 echo "===> Password successfully changed..."
 spacer
@@ -301,7 +301,7 @@ spacer
 echo "===> Cleaning up directory..."
 spacer
 cd /home/pi/raspinet
-sudo rm -rf RetroPie-Power-Switch
+sudo rm -rf /home/pi/RetroPie-Power-Switch
 echo "===> All done!..."
 spacer
 # ----------------------------------------------------------------------------------#
