@@ -301,7 +301,7 @@ spacer
 echo "===> Cleaning up directory..."
 spacer
 cd /home/pi/raspinet
-sudo rm -rf /home/pi/RetroPie-Power-Switch
+sudo rm -rf /home/pi/RetroPie-Power-Switch/
 echo "===> All done!..."
 spacer
 # ----------------------------------------------------------------------------------#
