@@ -301,11 +301,6 @@ echo "===> Installation complete..."
 spacer
 echo "===>Installing power-switch..."
 # ---------------- Adding wake button from my arcade project ----------------- #
-git clone https://github.com/GaryDeco/RetroPie-Power-Switch.git
-cd RetroPie-Power-Switch/script/
-bash install
-spacer
-echo "===> Power-switch added..."
 spacer
 # ---------------------------------------------------------------------------#
 echo "===> Rebooting..."
