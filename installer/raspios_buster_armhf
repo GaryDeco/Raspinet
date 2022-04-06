@@ -5,7 +5,6 @@
 # Date created: 2/19/2022
 # Updated: 3/10/2022
 # Description: Install script for raspinet scanner
-# This script needs refinement, it has been tested and is working. 
 # run this script on a fresh install of a raspbian OS to build the scanner enviornment. 
 
 # This script is run with the following commands in the Rpi terminal
@@ -16,8 +15,7 @@
 # --- Run the build script --- #
 # sudo bash raspios_buster_armhf
 
-# Everything should build and install. Note that this script needs some refinement, but it
-# does work for me currently on the latest 32-bit buster OS (10) from the raspberry pi website. 
+# Please add an issue if you encounter a bug
 ###########################################################################################
 
 echo "
@@ -50,7 +48,7 @@ HOME_URL = http://www.raspbian.org/
 #################### SETUP ###############################
 # for convenience
 spacer(){
-  echo ""; sleep 1
+  echo ""; sleep $1
 }
 
 TZ="America/Detroit"
@@ -89,7 +87,7 @@ fi
 echo "===> Getting system info..."
 #--- Display some system info --#
 cat /proc/cpuinfo
-spacer
+spacer 1
 
 ################################# SSH ###################################
 # --- check is SSH is enabled, if not, install it. 
@@ -100,7 +98,7 @@ if service ssh status | grep -q inactive; then
     ssh-keygen -A &&
     update-rc.d ssh enable &&
     invoke-rc.d ssh start 
-    spacer
+    spacer 1
     # -------------------------------------------#
     # added to enable root ssh login (3/12/2022)
     #TODO tranfer all fixes to another file
@@ -113,7 +111,7 @@ else
     echo "===> SSH is already enabled... Moving on"
 fi
 
-spacer
+spacer 1
 
 ######################### Disable Wi-Fi and bluetooth #########################
 # disable transmisson capability (persists after reboot, reverse with unblock command)
@@ -129,7 +127,7 @@ sudo apt-get insatll raspi-config
 # basic installs
 echo ""
 echo "===> Installing basic packages..."
-spacer
+spacer 1
 ################################# OS TOOLS #####################################
 sudo apt-get install -y whiptail # menu tool
 sudo apt-get install -y figlet # pretty display in CLI
@@ -150,37 +148,41 @@ if [ $OS_ARCH = "32-bit" ]; then
   spacer
 else
   echo "This OS has a $ARCH architecture, zenmap can not currently be installed"
-  spacer
+  spacer 1
 fi
 sudo apt-get install -y nmap # scanning the network
 sudo apt-get install -y ndiff # comparing scans
+sudo apt-get install -y xsltproc # convert xml to html {added 4/1/2022}
+#sudo apt-get install -y network-manager # {added 4/2/2022}
+sudo apt-get install -y pishrink # .img file handling
+sudo apt-get install -y gparted # partition handling and resizing
 
 ############################## configurations #####################################
 #------ Locale -------#
 echo "===> Updating locale..."
 sudo perl -pi -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
-spacer
+spacer 1
 echo "===> Changing timezone..."
 sudo rm /etc/localtime
 sudo ln -s /usr/share/zoneinfo/$TZ /etc/localtime
 sudo rm /etc/timezone
 echo $TZ > /etc/timezone
 sudo timedatectl
-spacer
+spacer 1
 echo "===> Timezone updated..."
-spacer
+spacer 1
 echo "===> Changing keyboard to US"
 sudo sed -i 's/XKBMODEL=\"\w*"/XKBMODEL=\"'$KBMODEL'\"/g' /etc/default/keyboard
 sudo sed -i 's/XKBLAYOUT=\"\w*"/XKLAYOUT=\"'$KBLAYOUT'\"/g' /etc/default/keyboard
 sudo sed -i 's/XKBOPTIONS=\"\w*"/XKBOPTIONS=\"'$KBMODEL'\"/g' /etc/default/keyboard
-spacer
+spacer 1
 echo "===> locale updates complete..."
-spacer
+spacer 1
 echo "===> Changing Wi-Fi Country to US..."
 #TODO complete this config
-spacer
+spacer 1
 echo "===> Changing hostname..."
-spacer
+spacer 1
 echo $HOSTNAME > /etc/hostname
 echo "===> Hostname update in /etc/hostname"
 #---------------------------------------------------------------#
@@ -198,20 +200,20 @@ EOF
 }
 fix_hostname > /etc/hosts
 #--------------------------------------------------------------#
-spacer
+spacer 1
 echo "===> Hostname changed to $HOSTNAME"
-spacer
-echo "===> Diabling screen blanking..."
+spacer 1
+echo "===> Disabling screen blanking..."
 sudo mkdir -p /etc/X11/xorg.conf.d/
 sudo cp /usr/share/raspi-config/10-blanking.conf /etc/X11/xorg.conf.d/
 printf "\\033[9;0]" >> /etc/issue
-spacer
+spacer 1
 echo "===> Changing password..."
 echo "$DEF_USER:$PASSWD" | chpasswd
 echo "$ROOT_USER:$PASSWD" | chpasswd # also change root password for ssh login
-spacer
+spacer 1
 echo "===> Password successfully changed..."
-spacer
+spacer 1
 ############################## Link files #####################################
 # symlinks #TODO symlinks need to be added
 
@@ -219,94 +221,42 @@ spacer
 # remove unecessary stuff #TODO fix this with if statement 
 # TODO check behavior for if files do not exist
 echo "===> Building Rapinet environment..."
-spacer
-sudo rm -rf Bookshelf/
-sudo rm -rf Documents/
-sudo rm -rf Downloads/
-sudo rm -rf Music/
-sudo rm -rf Pictures/
-sudo rm -rf Public/
-sudo rm -rf Templates/
-sudo rm -rf Videos/
-echo "===> Cleaned out some junk..."
-spacer
-
+spacer 1
 ############################## ADDING DIRECTORIES ##################################
-# make sure we are in the right dir #TODO combine and simplfy
-echo "===> Adding some directories..."
-sudo mkdir -p raspinet/bin && 
-sudo mkdir raspinet/discovery &&
-sudo mkdir raspinet/discovery/hosts && 
-sudo mkdir raspinet/discovery/ports &&
-sudo mkdir raspinet/discovery/services
-sudo chmod 777 raspinet &&
-sudo chmod 777 raspinet/bin &&
-sudo chmod 777 raspinet/discovery &&
-sudo chmod 777 raspinet/discovery/hosts &&
-sudo chmod 777 raspinet/discovery/ports &&
-sudo chmod 777 raspinet/discovery/services
-spacer
+
 ############################# SCRIPT INSTALLS ####################################
-echo "===> Getting some scripts..."
-# bin folder
-sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/filemanager
-sleep 1
-sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/linker
-sleep 1
-sudo wget https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/bin/piscan.sh
-spacer
-echo "===> Raspinet scripts installed..."
-spacer
 
 ######################### FILE RELOCATION AND PERMISSIONS #######################
-echo "===> Relocating files..."
-spacer
-# --- move files and give permissions --- #
-sudo mv filemanager raspinet/bin/
-sudo chmod 777 raspinet/bin/filemanager
-sudo mv linker raspinet/bin/
-sudo chmod 777 raspinet/bin/linker
-sudo mv piscan.sh raspinet/bin/
-sudo chmod 777 raspinet/bin/piscan.sh
-
-sleep 1
-echo "===> Files relocated..."
-spacer
-
-# --- discovery folder --- #
-#TODO Add scripts
-echo "===> Done"
-spacer
 
 ############################### End of Config ##################################
 # final house keeping
 echo "===> Covering tracks..."
 sudo rm raspios_buster_armhf
-spacer
+spacer 1
 echo "===> Done"
 # reboot the system
-spacer
+spacer 1
 echo "===> Installation complete..."
-spacer
+spacer 1
 
 # ------------- Adding RPi wake button script from my arcade project -------------- #
 echo "===> Installing power-switch..."
-spacer
+spacer 1
 git clone https://github.com/GaryDeco/RetroPie-Power-Switch.git
 cd RetroPie-Power-Switch/script/
 bash install
-spacer
+spacer 1
 echo "===> Installed power switch"
-spacer
+spacer 1
 echo "===> Cleaning up directory..."
-spacer
+spacer 1
 cd /home/pi/raspinet
 sudo rm -rf /home/pi/RetroPie-Power-Switch/
 echo "===> All done!..."
-spacer
+spacer 1
 # ----------------------------------------------------------------------------------#
 echo "===> Rebooting..."
-spacer
+spacer 1
 sudo reboot 
 
 ############################### More To-Do's ##################################
