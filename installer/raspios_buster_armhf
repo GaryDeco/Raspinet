@@ -253,11 +253,9 @@ spacer 1
 cd /home/pi/raspinet
 sudo rm -rf /home/pi/RetroPie-Power-Switch/
 echo "===> All done!..."
-spacer 1
+
 # ----------------------------------------------------------------------------------#
-echo "===> Rebooting..."
-spacer 1
-sudo reboot 
+
 
 ############################### More To-Do's ##################################
 #TODO Organize with some functions
