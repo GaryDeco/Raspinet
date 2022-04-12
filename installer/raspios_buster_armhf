@@ -50,24 +50,26 @@ sudo apt-get insatll raspi-config
 ########################### install dependencies ################################
 # basic installs
 
-
 ################################# OS TOOLS #####################################
 sudo apt-get install -y whiptail # menu tool
 sudo apt-get install -y figlet # pretty display in CLI
 sudo apt-get install -y rrdtool # for sampling temperature
 sudo apt-get install -y git # ensure git is installed
-sudo apt-get install -y curl wget lynx w3m # ensure wget and curl are up to date and add lynx + w3m
+sudo apt-get install -y curl wget lynx w3m gnupg2 # ensure wget and curl are up to date and add lynx + w3m
+
 # --- Nodejs for web server --- #
 sudo curl -fsSL https://deb.nodesource.com/setup_17.x | bash -
 sudo apt-get install -y nodejs
 # --- python tools --- #
 sudo pip install argparse
 sudo pip install python-libnmap
+sudo pip install python-pandas
 ############################### NETWORK TOOLS ####################################
 
 sudo apt-get install -y nmap # scanning the network
 sudo apt-get install -y ndiff # comparing scans
 sudo apt-get install -y xsltproc # convert xml to html {added 4/1/2022}
+sudo apt-get install -y arp-scan
 #sudo apt-get install -y network-manager # {added 4/2/2022}
 sudo apt-get install -y pishrink # .img file handling
 sudo apt-get install -y gparted # partition handling and resizing
@@ -123,10 +125,27 @@ sudo rm raspios_buster_armhf
 git clone https://github.com/GaryDeco/RetroPie-Power-Switch.git
 cd RetroPie-Power-Switch/script/
 bash install
-cd /home/pi/raspinet
-sudo rm -rf /home/pi/RetroPie-Power-Switch/
+echo
+cd /home/dev/raspinet
+sudo rm -rf /home/dev/RetroPie-Power-Switch/
 #--------------------------------------------------------------#
-read line
+if zenity --width=300 --width=700 --question --text="Did you want to install the metasploit CLI? Press YES or CANCEL" --cancel-label="Cancel"; then
+sudo curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
+sudo chmod +x msfinstall
+sudo bash msfinstall
+else
+break
+fi
+
+dispMsg "RasPiNet Installer" "Installation complete"
+if whiptail --title "RasPiNet Installer" --yesno "Do you want to reboot now?" 10 40; then
+    dispMsg "RasPiNet Installer" "Rebooting..."
+    sudo reboot now
+else
+    dispMsg "RasPiNet Installer" "Exiting..."
+    exit
+fi
+
 ############################### More To-Do's ##################################
 #TODO Organize with some functions
 #TODO Use flags for better management
