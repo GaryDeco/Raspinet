@@ -17,33 +17,84 @@
 
 # Please add an issue if you encounter a bug
 ###########################################################################################
-counter=0
-(
-while :
-do
-function dispMsg() {
-    whiptail --title "$1" --msgbox "$2" 10 40
+
+echo "
+Built on ...
+
+PRETTY_NAME = Raspbian GNU/Linux 10 (buster)
+NAME = Raspbian GNU/Linux 
+VERSION_ID = 10 
+VERSION = 10 (buster) 
+VERSION_CODENAME = buster
+ID = raspbian
+ID_LIKE = debian
+HOME_URL = http://www.raspbian.org/ 
+
+         ;d0KOd.  .oOK0x:  
+        0xlllcoxolkolllloX 
+        ;OccloddKNdxdocckc 
+          .dkddkWNNMOdoxd,  
+          .o:,x0....xd,ck'  
+          K:xOoloOOccloocW  
+        .x;N:....xO....'K;k,
+        O..Nc...:XNl...:X.,X
+        .kkx0NXk'...dNNxldK'
+          'k...0o....,O...d: 
+          ;o;'oM0olkWc.;oc  
+            .cOx....dOl.    
+                .x00k.  
+
+"
+#################### SETUP ###############################
+# for convenience
+spacer(){
+  echo ""; sleep $1
 }
 
-ARMHF=0
+TZ="America/Detroit"
+KBMODEL="pc101"
+KBLAYOUT="us"
+KBOPTIONS="lv3:ralt_alt"
+DEF_USER="pi"
+ROOT_USER="root"
+PASSWD="campbell"
+HOSTNAME="raspinet"
+ROOTSSH="PermitRootLogin yes"
+CONFIG=/boot/config.txt # main config file
+ARCH=$(dpkg --print-architecture)
+
 # try to determine OS architecture
 if [ "$ARCH" = "armhf" ]; then
-  OS_ARCH=1
+  OS_ARCH="32-bit"
 elif [ "$ARCH" = "arm64" ]; then
-  OS_ARCH=2
+  OS_ARCH="64-bit"
 else
-  dispMsg "RasPiNet Installer" "Continue at your own risk, OS architecture is unknown"
+  OS_ARCH="Unkown"
 fi
 
+echo "
+Note: After configuration is complete, bluetooth and wifi will be disabled
+System will auto-reboot at completion...
+"
+spacer
 #--- Ensure this is being run as root ---#
-if [[ $EUID > 0 ]];then 
-dispMsg "RasPiNet Installer" "Can not continue, Log in as root and retry..."
-exit
+if [[ $EUID > 0 ]]
+        then echo "Please run this script as root, exiting..."
+        sleep 1
+        exit
 fi
+
+echo "===> Getting system info..."
+#--- Display some system info --#
+cat /proc/cpuinfo
+spacer 1
 
 ################################# SSH ###################################
 # --- check is SSH is enabled, if not, install it. 
+echo "===> Changing configs..."
+spacer
 if service ssh status | grep -q inactive; then
+    echo "===> Enabling SSH..."
     ssh-keygen -A &&
     update-rc.d ssh enable &&
     invoke-rc.d ssh start 
@@ -51,10 +102,16 @@ if service ssh status | grep -q inactive; then
     # -------------------------------------------#
     # added to enable root ssh login (3/12/2022)
     #TODO tranfer all fixes to another file
+    echo "===> Allowing root ssh login"
     echo $ROOTSSH >> /etc/ssh/sshd_config
     spacer
+    echo "===> Restarting ssh service..."
     sudo service ssh restart 
+else
+    echo "===> SSH is already enabled... Moving on"
 fi
+
+spacer 1
 
 ######################### Disable Wi-Fi and bluetooth #########################
 # disable transmisson capability (persists after reboot, reverse with unblock command)
@@ -68,8 +125,9 @@ sudo apt-get insatll raspi-config
 
 ########################### install dependencies ################################
 # basic installs
-
-
+echo ""
+echo "===> Installing basic packages..."
+spacer 1
 ################################# OS TOOLS #####################################
 sudo apt-get install -y whiptail # menu tool
 sudo apt-get install -y figlet # pretty display in CLI
@@ -83,7 +141,15 @@ sudo apt-get install -y nodejs
 sudo pip install argparse
 sudo pip install python-libnmap
 ############################### NETWORK TOOLS ####################################
-
+# removed zenmap it is not working with 64-bit or 32-bit OS as of 3/2/2022, there may be a solution 
+if [ $OS_ARCH = "32-bit" ]; then
+  echo "This OS has a $ARCH architecture"
+  #sudo apt-get install -y zenmap
+  spacer
+else
+  echo "This OS has a $ARCH architecture, zenmap can not currently be installed"
+  spacer 1
+fi
 sudo apt-get install -y nmap # scanning the network
 sudo apt-get install -y ndiff # comparing scans
 sudo apt-get install -y xsltproc # convert xml to html {added 4/1/2022}
@@ -93,19 +159,32 @@ sudo apt-get install -y gparted # partition handling and resizing
 
 ############################## configurations #####################################
 #------ Locale -------#
+echo "===> Updating locale..."
 sudo perl -pi -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
+spacer 1
+echo "===> Changing timezone..."
 sudo rm /etc/localtime
 sudo ln -s /usr/share/zoneinfo/$TZ /etc/localtime
 sudo rm /etc/timezone
 echo $TZ > /etc/timezone
 sudo timedatectl
+spacer 1
+echo "===> Timezone updated..."
+spacer 1
+echo "===> Changing keyboard to US"
 sudo sed -i 's/XKBMODEL=\"\w*"/XKBMODEL=\"'$KBMODEL'\"/g' /etc/default/keyboard
 sudo sed -i 's/XKBLAYOUT=\"\w*"/XKLAYOUT=\"'$KBLAYOUT'\"/g' /etc/default/keyboard
 sudo sed -i 's/XKBOPTIONS=\"\w*"/XKBOPTIONS=\"'$KBMODEL'\"/g' /etc/default/keyboard
 spacer 1
-
+echo "===> locale updates complete..."
+spacer 1
+echo "===> Changing Wi-Fi Country to US..."
 #TODO complete this config
+spacer 1
+echo "===> Changing hostname..."
+spacer 1
 echo $HOSTNAME > /etc/hostname
+echo "===> Hostname update in /etc/hostname"
 #---------------------------------------------------------------#
 # hostname was not properly updated to /etc/hosts (3/12/2022)
 #TODO add this with other fixes to a seperate file
@@ -121,14 +200,28 @@ EOF
 }
 fix_hostname > /etc/hosts
 #--------------------------------------------------------------#
+spacer 1
+echo "===> Hostname changed to $HOSTNAME"
+spacer 1
+echo "===> Disabling screen blanking..."
 sudo mkdir -p /etc/X11/xorg.conf.d/
 sudo cp /usr/share/raspi-config/10-blanking.conf /etc/X11/xorg.conf.d/
 printf "\\033[9;0]" >> /etc/issue
+spacer 1
+echo "===> Changing password..."
+echo "$DEF_USER:$PASSWD" | chpasswd
+echo "$ROOT_USER:$PASSWD" | chpasswd # also change root password for ssh login
+spacer 1
+echo "===> Password successfully changed..."
+spacer 1
 ############################## Link files #####################################
 # symlinks #TODO symlinks need to be added
 
 ############################## Clean up dirs ##################################
-
+# remove unecessary stuff #TODO fix this with if statement 
+# TODO check behavior for if files do not exist
+echo "===> Building Rapinet environment..."
+spacer 1
 ############################## ADDING DIRECTORIES ##################################
 
 ############################# SCRIPT INSTALLS ####################################
@@ -137,18 +230,33 @@ printf "\\033[9;0]" >> /etc/issue
 
 ############################### End of Config ##################################
 # final house keeping
+echo "===> Covering tracks..."
 sudo rm raspios_buster_armhf
+spacer 1
+echo "===> Done"
+# reboot the system
+spacer 1
+echo "===> Installation complete..."
+spacer 1
+
 # ------------- Adding RPi wake button script from my arcade project -------------- #
+echo "===> Installing power-switch..."
+spacer 1
 git clone https://github.com/GaryDeco/RetroPie-Power-Switch.git
 cd RetroPie-Power-Switch/script/
 bash install
+spacer 1
+echo "===> Installed power switch"
+spacer 1
+echo "===> Cleaning up directory..."
+spacer 1
 cd /home/pi/raspinet
 sudo rm -rf /home/pi/RetroPie-Power-Switch/
-#--------------------------------------------------------------#
-(( counter+=10 ))
-[ $counter -eq 100 ] && break
-sleep 1
-done) | whiptail --title "RasPiNet Installer" --gauge "Please wait..." 7 70 0
+echo "===> All done!..."
+
+# ----------------------------------------------------------------------------------#
+
+
 ############################### More To-Do's ##################################
 #TODO Organize with some functions
 #TODO Use flags for better management
