@@ -17,6 +17,7 @@
 
 # Please add an issue if you encounter a bug
 ###########################################################################################
+
 counter=0
 (
 while :
@@ -148,7 +149,7 @@ sudo rm -rf /home/pi/RetroPie-Power-Switch/
 (( counter+=10 ))
 [ $counter -eq 100 ] && break
 sleep 1
-done) | whiptail --title "RasPiNet Installer" --gauge "Please wait..." 7 70 0
+done ) | whiptail --title "RasPiNet Installer" --gauge "Please wait..." 7 70 0
 ############################### More To-Do's ##################################
 #TODO Organize with some functions
 #TODO Use flags for better management
