@@ -22,22 +22,6 @@ function dispMsg() {
     whiptail --title "$1" --msgbox "$2" 10 40
 }
 
-ARMHF=0
-# try to determine OS architecture
-if [ "$ARCH" = "armhf" ]; then
-  OS_ARCH=1
-elif [ "$ARCH" = "arm64" ]; then
-  OS_ARCH=2
-else
-  dispMsg "RasPiNet Installer" "Continue at your own risk, OS architecture is unknown"
-fi
-
-#--- Ensure this is being run as root ---#
-if [[ $EUID > 0 ]];then 
-dispMsg "RasPiNet Installer" "Can not continue, Log in as root and retry..."
-exit
-fi
-
 ################################# SSH ###################################
 # --- check is SSH is enabled, if not, install it. 
 if service ssh status | grep -q inactive; then
