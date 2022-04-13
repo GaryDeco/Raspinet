@@ -6,7 +6,11 @@
 Welcome to Raspinet's documentation!
 ====================================
 
+Cool section
+-----------
 
+Cool Subsection
+~~~~~~~~~~~~~~~
 
 .. toctree::
    :maxdepth: 2
