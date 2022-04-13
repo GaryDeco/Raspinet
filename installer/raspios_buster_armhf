@@ -130,7 +130,7 @@ cd /home/dev/raspinet
 sudo rm -rf /home/dev/RetroPie-Power-Switch/
 #--------------------------------------------------------------#
 # Fix for installer icon
-def fix_icon(){
+function fix_icon(){
 sudo chmod 777 /home/dev/Desktop/installer.desktop
 cat << EOF
 [Desktop Entry]
