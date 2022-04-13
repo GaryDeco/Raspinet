@@ -158,8 +158,7 @@ cd /home/dev/raspinet
 sudo rm -rf /home/dev/RetroPie-Power-Switch/
 #--------------------------------------------------------------#
 clear
-dispMsg "RasPiNet Installer" "Installation complete"
-if whiptail --title "RasPiNet Installer" --yesno "Do you want to reboot now?" 10 40; then
+if whiptail --title "RasPiNet Installer" --yesno "Install complete, Do you want to reboot now?" 10 40; then
     dispMsg "RasPiNet Installer" "Rebooting..."
     sudo reboot now
 else
