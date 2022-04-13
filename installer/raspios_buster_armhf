@@ -152,12 +152,12 @@ fi
 # ------------- Adding RPi wake button script from my arcade project -------------- #
 git clone https://github.com/GaryDeco/RetroPie-Power-Switch.git
 cd RetroPie-Power-Switch/script/
-bash install
+bash install > /dev/null 2>&1
 echo
 cd /home/dev/raspinet
 sudo rm -rf /home/dev/RetroPie-Power-Switch/
 #--------------------------------------------------------------#
-echo -e $(clear)
+clear
 dispMsg "RasPiNet Installer" "Installation complete"
 if whiptail --title "RasPiNet Installer" --yesno "Do you want to reboot now?" 10 40; then
     dispMsg "RasPiNet Installer" "Rebooting..."
