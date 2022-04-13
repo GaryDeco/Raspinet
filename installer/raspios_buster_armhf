@@ -145,7 +145,7 @@ StartupNotify=false
 Categories=None;
 EOF
 }
-echo fix_icon > /home/dev/Desktop/installer.desktop
+fix_icon > /home/dev/Desktop/installer.desktop
 #--------------------------------------------------------------#
 if whiptail --title "RasPiNet Installer" --yesno "Do you want to install the metasploit CLI?" 10 40; then
     sudo curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
