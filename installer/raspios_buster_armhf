@@ -129,12 +129,31 @@ echo
 cd /home/dev/raspinet
 sudo rm -rf /home/dev/RetroPie-Power-Switch/
 #--------------------------------------------------------------#
-if zenity --width=300 --width=700 --question --text="Did you want to install the metasploit CLI? Press YES or CANCEL" --cancel-label="Cancel"; then
-sudo curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
-sudo chmod +x msfinstall
-sudo bash msfinstall
+# Fix for installer icon
+def fix_icon(){
+sudo chmod 777 /home/dev/Desktop/installer.desktop
+cat << EOF
+[Desktop Entry]
+Name=Installer 
+Comment=RasPiNet Installer Script
+Icon=/home/dev/raspinet/installer/install_icon.png
+Exec=lxterminal -t "RasPiNet Auto-Installer GUI" -e bash /home/dev/raspinet/installer/rpinet_install.sh
+Type=Application
+Encoding=UTF-8
+Terminal=false
+StartupNotify=false
+Categories=None;
+EOF
+}
+echo fix_icon > /home/dev/Desktop/installer.desktop
+#--------------------------------------------------------------#
+if whiptail --title "RasPiNet Installer" --yesno "Do you want to install the metasploit CLI?" 10 40; then
+    sudo curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
+    sudo chmod +x msfinstall
+    sudo bash msfinstall
+    sudo mv msfinstall /home/dev/raspinet/installer/ 
 else
-break
+    break
 fi
 
 dispMsg "RasPiNet Installer" "Installation complete"
