@@ -63,7 +63,7 @@ sudo apt-get install -y nodejs
 # --- python tools --- #
 sudo pip install argparse
 sudo pip install python-libnmap
-sudo apt-get install python3-pandas
+sudo apt-get install -y python3-pandas
 ############################### NETWORK TOOLS ####################################
 
 sudo apt-get install -y nmap # scanning the network
@@ -85,21 +85,20 @@ sudo timedatectl
 sudo sed -i 's/XKBMODEL=\"\w*"/XKBMODEL=\"'$KBMODEL'\"/g' /etc/default/keyboard
 sudo sed -i 's/XKBLAYOUT=\"\w*"/XKLAYOUT=\"'$KBLAYOUT'\"/g' /etc/default/keyboard
 sudo sed -i 's/XKBOPTIONS=\"\w*"/XKBOPTIONS=\"'$KBMODEL'\"/g' /etc/default/keyboard
-spacer 1
 
 #TODO complete this config
 echo $HOSTNAME > /etc/hostname
 #---------------------------------------------------------------#
 # hostname was not properly updated to /etc/hosts (3/12/2022)
-#TODO add this with other fixes to a seperate file
+TODO add this with other fixes to a seperate file
 fix_hostname(){
 cat << EOF
-127.0..0.1    localhost
+127.0.0.1     localhost
 ::1           localhost ip6-localhost ip6-loopback
 ff02::1       ip6-allnodes
 ff02::2       ip6-allrouters
 
-127.0.1.1     $HOSTNAME
+127.0.0.1     $HOSTNAME
 EOF
 }
 fix_hostname > /etc/hosts
@@ -121,31 +120,24 @@ printf "\\033[9;0]" >> /etc/issue
 ############################### End of Config ##################################
 # final house keeping
 sudo rm raspios_buster_armhf
-# ------------- Adding RPi wake button script from my arcade project -------------- #
-git clone https://github.com/GaryDeco/RetroPie-Power-Switch.git
-cd RetroPie-Power-Switch/script/
-bash install
-echo
-cd /home/dev/raspinet
-sudo rm -rf /home/dev/RetroPie-Power-Switch/
-#--------------------------------------------------------------#
 # Fix for installer icon
-function fix_icon(){
-sudo chmod 777 /home/dev/Desktop/installer.desktop
-cat << EOF
-[Desktop Entry]
-Name=Installer 
-Comment=RasPiNet Installer Script
-Icon=/home/dev/raspinet/installer/install_icon.png
-Exec=lxterminal -t "RasPiNet Auto-Installer GUI" -e bash /home/dev/raspinet/installer/rpinet_install.sh
-Type=Application
-Encoding=UTF-8
-Terminal=false
-StartupNotify=false
-Categories=None;
-EOF
-}
-fix_icon > /home/dev/Desktop/installer.desktop
+# function fix_icon(){
+# sudo chmod 777 /home/dev/Desktop/installer.desktop
+# cat << EOF
+# [Desktop Entry]
+# Name=Installer 
+# Comment=RasPiNet Installer Script
+# Icon=/home/dev/raspinet/installer/install_icon.png
+# Exec=lxterminal -t "RasPiNet Auto-Installer GUI" -e bash /home/dev/raspinet/installer/rpinet_install.sh
+# Type=Application
+# Encoding=UTF-8
+# Terminal=false
+# StartupNotify=false
+# Categories=None;
+# EOF
+# }
+# fix_icon > /home/dev/Desktop/installer.desktop
+# sleep 1
 #--------------------------------------------------------------#
 if whiptail --title "RasPiNet Installer" --yesno "Do you want to install the metasploit CLI?" 10 40; then
     sudo curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
@@ -156,6 +148,16 @@ else
     break
 fi
 
+
+# ------------- Adding RPi wake button script from my arcade project -------------- #
+git clone https://github.com/GaryDeco/RetroPie-Power-Switch.git
+cd RetroPie-Power-Switch/script/
+bash install
+echo
+cd /home/dev/raspinet
+sudo rm -rf /home/dev/RetroPie-Power-Switch/
+#--------------------------------------------------------------#
+
 dispMsg "RasPiNet Installer" "Installation complete"
 if whiptail --title "RasPiNet Installer" --yesno "Do you want to reboot now?" 10 40; then
     dispMsg "RasPiNet Installer" "Rebooting..."
@@ -164,7 +166,6 @@ else
     dispMsg "RasPiNet Installer" "Exiting..."
     exit
 fi
-
 ############################### More To-Do's ##################################
 #TODO Organize with some functions
 #TODO Use flags for better management
