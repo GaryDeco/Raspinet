@@ -63,7 +63,7 @@ sudo apt-get install -y nodejs
 # --- python tools --- #
 sudo pip install argparse
 sudo pip install python-libnmap
-sudo pip install python-pandas
+sudo apt-get install python3-pandas
 ############################### NETWORK TOOLS ####################################
 
 sudo apt-get install -y nmap # scanning the network
