@@ -1,0 +1,25 @@
+About Network Profiles:
+(scroll using down arrow on keyboard)
+
+Network profiles are neccessary in order 
+to distinguish one network from another.
+when a profile is created, a new report 
+directory is created under that profile 
+name. All scans and reports conducted 
+under that profile are saved to that 
+directory. It is up to the user to ensure 
+the correct profile is used for the 
+network being analyzed. If it is 
+incorrect, the reporting will be 
+corrupted/inaccurate. Please use caution. 
+
+Creating a new profile:
+
+Select option 2, and type in a single string.
+If the name exists, you can switch to it,
+if it does not exist, you can add it as a 
+new profile or exit to return to the menu.
+Your new profile wil be switched to auto-
+matically upon creation. 
+
+Author: Gary Decosmo

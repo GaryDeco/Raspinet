@@ -1,0 +1,15 @@
+{
+  "name": "netapp",
+  "version": "1.0.0",
+  "description": "Network Analyzer Web Interface",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gary Decosmo",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "onoff": "^6.0.3"
+  }
+}
