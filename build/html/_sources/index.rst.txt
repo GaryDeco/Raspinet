@@ -6,6 +6,7 @@
 Welcome to RasPiNet's documentation!
 ====================================
 *This Page is currently under construction!!*
+*More coming soon...*
 
 .. toctree::
    :maxdepth: 2
@@ -26,30 +27,36 @@ CLI Commands Quick Reference
 =========================
 
 defscan 
---------------
-============================  ============================================================
-Argument                      Description 
-============================  ============================================================
-usage:                        ``defscan [option1]``                           
-about:                        Default scans ultilizing Nmap for network discovery
-                              Determines and scans the entire subnet by default: 
-                              i.e., 192.168.68.25/24
-``[-i | -inv]``               Scan Type: [``nmap -n -sn <tgt>``] No port scan.
-                              Return a text file with the list of live host IP's
-                              Ovewrites the file and makes a date/time stamped copy
-``[-po | -ports_open]``       Scan Type: [``nmap --top-ports 100 -F --open <tgt>``]
-                              A quick scan of the top 100 ports. Returns a text file
-                              with the list of host IP's and their open ports.
-``[-h | -help]``              Call the help menu                          
-``[]``                        Reference to help menu
-============================  ============================================================
 
-smartscan 
---------------
++----------------------------+-----------------------------------------------------------+
+| **defscan** **[arg1]**                                                                 |
++----------------------------+-----------------------------------------------------------+
+| **Argument**               |    **Description**                                        |
++----------------------------+-----------------------------------------------------------+
+| usage:                     |  ``defscan [option1]``                                    |
++----------------------------+-----------------------------------------------------------+
+|about:                      |  Default scans ultilizing Nmap for network discovery      |
+|                            |  Determines and scans the entire subnet by default:       | 
+|                            |  i.e., 192.168.68.25/24                                   |
++----------------------------+-----------------------------------------------------------+
+|``[-i | -inv]``             |  Scan Type: [``nmap -n -sn <tgt>``] No port scan.         |
+|                            |  Return a text file with the list of live host IP's       |
+|                            |  Ovewrites the file and makes a date/time stamped copy    |
++----------------------------+-----------------------------------------------------------+
+|``[-po | -ports_open]``     |  Scan Type: [``nmap --top-ports 100 -F --open <tgt>``]    |
+|                            |  A quick scan of the top 100 ports. Returns a text file   |
+|                            |  with the list of host IP's and their open ports.         |
++----------------------------+-----------------------------------------------------------+
+|``[-h | -help]``            |  Call the help menu                                       |
++----------------------------+-----------------------------------------------------------+
+|``[]``                      |  Reference to help menu                                   |
++----------------------------+-----------------------------------------------------------+
+| **smartscan** **[arg1]**                                                               |
++----------------------------+-----------------------------------------------------------+
+| **Argument**               | **Description**                                           |
++----------------------------+-----------------------------------------------------------+
+| ``[-h | -help]``           |  Call the help menu                                       |            
++----------------------------+-----------------------------------------------------------+
+|``[]``                      |  Reference to help menu                                   |
++----------------------------+-----------------------------------------------------------+
 
-================  ============================================================
-Argument          Description 
-================  ============================================================
-``[-h | -help]``  pending                         
-``[]``            pending
-================  ============================================================

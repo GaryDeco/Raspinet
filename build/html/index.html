@@ -89,11 +89,7 @@
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">Welcome to RasPiNet’s documentation!</a></li>
 <li><a class="reference internal" href="#pages">Pages</a></li>
-<li><a class="reference internal" href="#cli-commands-quick-reference">CLI Commands Quick Reference</a><ul>
-<li><a class="reference internal" href="#defscan">defscan</a></li>
-<li><a class="reference internal" href="#smartscan">smartscan</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#cli-commands-quick-reference">CLI Commands Quick Reference</a></li>
 </ul>
 </div>
             
@@ -163,7 +159,8 @@
             
   <div class="section" id="welcome-to-raspinet-s-documentation">
 <h1>Welcome to RasPiNet’s documentation!<a class="headerlink" href="#welcome-to-raspinet-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p><em>This Page is currently under construction!!</em></p>
+<p><em>This Page is currently under construction!!</em>
+<em>More coming soon…</em></p>
 <div class="toctree-wrapper compound">
 </div>
 <a class="reference external image-reference" href="https://raspinet.readthedocs.io/en/latest/?badge=latest"><img alt="Documentation Status" src="https://readthedocs.org/projects/raspinet/badge/?version=latest" /></a>
@@ -178,68 +175,55 @@
 </div>
 <div class="section" id="cli-commands-quick-reference">
 <h1>CLI Commands Quick Reference<a class="headerlink" href="#cli-commands-quick-reference" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="defscan">
-<h2>defscan<a class="headerlink" href="#defscan" title="Permalink to this headline">¶</a></h2>
+<p>defscan</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 32%" />
 <col style="width: 68%" />
 </colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Argument</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
 <tbody>
-<tr class="row-even"><td><p>usage:</p></td>
+<tr class="row-odd"><td colspan="2"><p><strong>defscan</strong> <strong>[arg1]</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Argument</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>usage:</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">defscan</span> <span class="pre">[option1]</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p>about:</p></td>
+<tr class="row-even"><td><p>about:</p></td>
 <td><p>Default scans ultilizing Nmap for network discovery
 Determines and scans the entire subnet by default:
 i.e., 192.168.68.25/24</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">[-i</span> <span class="pre">|</span> <span class="pre">-inv]</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">[-i</span> <span class="pre">|</span> <span class="pre">-inv]</span></code></p></td>
 <td><p>Scan Type: [<code class="docutils literal notranslate"><span class="pre">nmap</span> <span class="pre">-n</span> <span class="pre">-sn</span> <span class="pre">&lt;tgt&gt;</span></code>] No port scan.
 Return a text file with the list of live host IP’s
 Ovewrites the file and makes a date/time stamped copy</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">[-po</span> <span class="pre">|</span> <span class="pre">-ports_open]</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">[-po</span> <span class="pre">|</span> <span class="pre">-ports_open]</span></code></p></td>
 <td><p>Scan Type: [<code class="docutils literal notranslate"><span class="pre">nmap</span> <span class="pre">--top-ports</span> <span class="pre">100</span> <span class="pre">-F</span> <span class="pre">--open</span> <span class="pre">&lt;tgt&gt;</span></code>]
 A quick scan of the top 100 ports. Returns a text file
 with the list of host IP’s and their open ports.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">[-h</span> <span class="pre">|</span> <span class="pre">-help]</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">[-h</span> <span class="pre">|</span> <span class="pre">-help]</span></code></p></td>
 <td><p>Call the help menu</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
+<td><p>Reference to help menu</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p><strong>smartscan</strong> <strong>[arg1]</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Argument</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">[-h</span> <span class="pre">|</span> <span class="pre">-help]</span></code></p></td>
+<td><p>Call the help menu</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
 <td><p>Reference to help menu</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="smartscan">
-<h2>smartscan<a class="headerlink" href="#smartscan" title="Permalink to this headline">¶</a></h2>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 21%" />
-<col style="width: 79%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Argument</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">[-h</span> <span class="pre">|</span> <span class="pre">-help]</span></code></p></td>
-<td><p>pending</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
-<td><p>pending</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 
 
