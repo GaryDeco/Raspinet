@@ -37,7 +37,7 @@ ETH0IP=$(ip addr show | grep eth0 | grep inet | awk '{print$2}' | cut -d'/' -f1)
 DT=$(date "+%F-%H-%M")
 # gpio
 SCANLED_DIR=/sys/class/gpio/gpio22
-sudo usermod -aG gpio pi # permissions for gpio access (pi user)
+sudo usermod -aG gpio dev # permissions for gpio access (pi user)
 
 if [ -f $RASDIR/profiles/default.txt ];then
     PROF=$(cat $RASDIR/profiles/default.txt)
