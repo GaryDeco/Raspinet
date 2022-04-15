@@ -43,8 +43,10 @@ done
 echo "Search Complete"
 echo "${range} Hosts were scanned"
 echo "Saving temp file to: `$pwd`/tmp"
+#TODO Fix dirs
 arp -e | grep -v incomplete > /home/pi/DSI/scripts/tmp/arp_cache_$(date +%F)
 echo "Copying timestamped temp file to: `$pwd`/arptables"
+#TODO update these directories for integration into the new format
 cp /home/pi/DSI/scripts/tmp/arp_cache_$(date +%F) /home/pi/DSI/scripts/arptables/arp_cache_$(date +%F_%H-%M-%S)
 echo "Arp cache has been updated:"
 arp -e
@@ -55,8 +57,10 @@ read choice
 if [ "$choice" = y ]; then
        clear
        echo "Incomplete entries have been removed:"
+       #TODO Fix the dirs below
        sudo grep -v address /home/pi/DSI/scripts/tmp/arp_cache_$(date +%F) | awk -F" " {' print $1" "$3'} > /home/pi/DSI/scripts/tmp/update
        sudo ip -s neigh flush all
+       #TODO Fix dirs
        sudo arp -f /home/pi/DSI/scripts/tmp/update
        sudo rm /home/pi/DSI/scripts/tmp/update
        echo "Report cleaned up..."
@@ -65,7 +69,7 @@ if [ "$choice" = y ]; then
 else
        echo "OK, Saving all..." 
 fi
-
+#TODO Fix dirs
 sudo cp /home/pi/DSI/scripts/update_arp_cache.sh /usr/local/bin
 echo "Report complete"
 

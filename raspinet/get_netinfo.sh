@@ -116,7 +116,8 @@ function netReport() {
     echo " "
 }
 
-
+#TODO Fix this dir
 netReport >> /home/pi/DSI/scripts/whiptail/network_reports/net_reports_$(date +%F_%H-%M).txt
+#TODO Fix this dir
 whiptail --title "Network Info (scroll-box)" --textbox /home/pi/DSI/scripts/whiptail/network_reports/net_reports_$(date +%F_%H-%M).txt 20 60 --scrolltext
 

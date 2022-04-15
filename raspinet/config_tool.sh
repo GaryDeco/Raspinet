@@ -71,6 +71,7 @@ function dlogMsg(){
 function build_profdirs(){
     # build_profdirs [profile name]
     # make directories for the profile
+    #TODO Fix ALL of these dirs
     sudo touch /home/pi/raspinet/profiles/default.txt
     sudo chmod 777 /home/pi/raspinet/profiles/default.txt
     sudo touch /home/pi/raspinet/profiles/temp.txt
@@ -111,15 +112,18 @@ function add_to_proflog(){
 
 function set_defpro(){
     # sets and adds a profile as the active profile 
+    #TODO Fix this dir
     if [ -f /home/pi/raspinet/profiles/default.txt ]; then
         sudo echo -e $1 > /home/pi/raspinet/profiles/default.txt
         sudo echo -e $1 >> /home/pi/raspinet/profiles/temp.txt
+        #TODO Fix this dir
         if grep -q $1 "/home/pi/raspinet/profiles/default.txt"; then
             PROF=$(cat /home/pi/raspinet/profiles/default.txt)
             if ! grep -q "$PROF" "/home/pi/raspinet/profiles/temp.txt"; then
                 add_to_proflog $1
                 dispMsg "($PROF) is now the current active profile" 
             else
+                #TODO Fix this dir
                 sudo awk '!seen[$0]++' /home/pi/raspinet/profiles/temp.txt > /home/pi/raspinet/profiles/proflog.txt #remove duplicates for netprof log 
                 dispMsg "($PROF) is the current active profile"
             fi
@@ -128,8 +132,10 @@ function set_defpro(){
 }
 
 function check_active_prof(){
+    #TODO Fix this dir
     PROF=$(cat /home/pi/raspinet/profiles/default.txt)
     if [ "$1" != "$PROF" ];then 
+        #TODO Fix this dir
         if ! grep -q "$1" "/home/pi/raspinet/profiles/proflog.txt"; then
             dispMsg "($1) is not a profile"
             if whiptail --yesno "Do you want to add $1 as a new profile?" 8 78; then
@@ -137,6 +143,7 @@ function check_active_prof(){
                 add_to_proflog $1
                 if whiptail --yesno "Do you want to set $1 as the active profile?" 8 78; then
                     set_defpro $1
+                    #TODO Fix this dir
                     PROF=$(cat /home/pi/raspinet/profiles/default.txt)
                     dispMsg "Current Active Network Profile" "                                $PROF"
                 else
@@ -150,6 +157,7 @@ function check_active_prof(){
             dispMsg "$1 already exists"
             if whiptail --yesno "Do you want to set $1 as the active profile?" 8 78; then
                 set_defpro $1
+                #TODO Fix this dir
                 PROF=$(cat /home/pi/raspinet/profiles/default.txt)
                 dispMsg "Profile set to" "                                $PROF"
             else
@@ -162,6 +170,7 @@ function check_active_prof(){
 }
 
 function set_prof_to_default(){
+    #TODO Fix this dir
     sudo echo -e "default" > /home/pi/raspinet/profiles/default.txt
     sudo echo -e "default" >> /home/pi/raspinet/profiles/temp.txt
     sudo awk '!seen[$0]++' /home/pi/raspinet/profiles/temp.txt > /home/pi/raspinet/profiles/proflog.txt #remove duplicates for netprof log 
@@ -241,6 +250,7 @@ function show_banner_info(){
 function main() {
     # update the profile variable.
     PROF=$(cat /home/pi/raspinet/profiles/default.txt)
+    #TODO Fix this dir
     sudo bash /home/pi/raspinet/filemanager.sh
     while true; do
         mainmenu=$(whiptail --title "RasPiNet Main Menu" --backtitle "$BKTITLE" --ok-button "Select" --cancel-button "Quit to Terminal" --menu "Select an option" 20 78 10 \
@@ -295,6 +305,7 @@ function main_option2() {
 
     if (whiptail --title "Do you want to Proceed?" --yesno "Choose [Y/N]" 8 78) then
         dispMsg "Switching to terminal"
+        #TODO Fix this dir
         sudo bash /home/pi/DSI/scripts/update_arp_cache.sh
         echo "Press <enter> to proceed"
         read line
@@ -309,6 +320,7 @@ function main_option2() {
 function main_option3() {
 
     dispMsg "Generating Report"
+    #TODO Fix this dir
 	sudo bash /home/pi/DSI/scripts/whiptail/get_netinfo.sh
     #read line 
 	dispMsg "Going back to the main menu"
@@ -478,6 +490,7 @@ function scanOption1(){
     HOSTUP=$PROFDIR/up_hosts
     # host inv
     COUNT=0
+    #TODO Fix this dir
     source /home/pi/raspinet/piscan.sh
     (( COUNT+=10 ))
     echo $COUNT | dialog --gauge "Please wait: Setting up scan..." 10 70 0
@@ -592,6 +605,7 @@ function smscanOption4(){
 #################################### END OF CONFIG ###########################################
 # execute main
 # make sure the profile variable is updated
+#TODO Fix this dir
 PROF=$(cat /home/pi/raspinet/profiles/default.txt)
 sudo bash /home/pi/raspinet/filemanager.sh
 show_banner_info 3

@@ -19,6 +19,7 @@ IFPATH="/sys/class/net"
 ethState=$IFPATH/eth0/operstate
 wifiState=$IFPATH/wlan0/operstate
 PROF=$(cat /home/pi/raspinet/profiles/default.txt)
+#TODO fix all of these dirs for the new format
 RASDIR=/home/pi/raspinet/
 REPDIR=$RASDIR/reports
 PORTDIR=$REPDIR/ports
@@ -164,6 +165,7 @@ about:                      Displays a string in the chosen font using figlet an
 
 function raspinet-menu(){
     sudo echo -e $(clear)
+    #TODO Fix dirs
     bash /home/pi/DSI/scripts/whiptail/config_tool.sh
     
 }
@@ -257,7 +259,9 @@ function get_open_ports(){
     cd $PODIR
     xsltproc open_ports.xml -o "open_ports.html"
     sudo cp open_ports.xml $POXML/open_ports_$DT.xml
+    #TODO Fix this dir
     sudo -rm -rf /home/pi/raspinet/reports/$PROF/open_ports/open_ports.xml 
+    #TODO Fix this dir
     sudo mv /home/pi/raspinet/reports/$PROF/open_ports/open_ports.html /home/pi/raspinet/reports/$PROF/open_ports/html/open_ports.html
     echo -e "${RED}[raspinet]${RESET} Generating HTML"
     sleep 1
