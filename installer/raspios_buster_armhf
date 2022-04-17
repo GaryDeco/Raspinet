@@ -112,6 +112,7 @@ sudo cp /usr/share/raspi-config/10-blanking.conf /etc/X11/xorg.conf.d/
 printf "\\033[9;0]" >> /etc/issue
 ############################## rc.local ##################################
 # modify as needed
+# this adds the wake LED functionality
 function update_rc.local(){
 cat << EOF
 #!/bin/sh -e
@@ -135,6 +136,25 @@ update_rc.local > /etc/rc.local
 sleep 1
 #reduce permissions
 sudo chmod 755 /etc/rc/local
+
+############################## update cron ##################################
+#### Add files ####
+wget --no-check-certificate --content-disposition https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/ethled.sh 
+sudo mv ethled.sh /home/dev/raspinet/ethled.sh
+sudo chmod 777 /home/dev/raspinet/ethled.sh
+#### Jobs ####
+function update_cron(){
+    JOB1="*/1 * * * * sudo /usr/bin/bash /home/dev/raspinet/ethled.sh &"
+    echo "adding cronjob"
+    crontab -l | { cat; echo "$JOB1"; } | crontab -
+    echo "cronjob added"
+    sleep 1
+    echo "restarting service"
+    sudo service cron start
+    echo "service restarted"
+}
+#>/dev/null 2>&1
+update_cron 
 ############################## Link files #####################################
 # symlinks #TODO symlinks need to be added
 
