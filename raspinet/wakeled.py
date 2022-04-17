@@ -13,8 +13,6 @@ import signal
 
 # A simple call to turn pin HIGH and keep it that way
 REDPIN = 18
-GRNPIN = 23
-BLUPIN = 25
 
 ON = 1
 OFF = 0
