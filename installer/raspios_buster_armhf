@@ -109,6 +109,9 @@ fix_hostname > /etc/hosts
 sudo mkdir -p /etc/X11/xorg.conf.d/
 sudo cp /usr/share/raspi-config/10-blanking.conf /etc/X11/xorg.conf.d/
 printf "\\033[9;0]" >> /etc/issue
+############################## rc.local ##################################
+sudo curl https://raw.githubusercontent.com/GaryDeco/Raspinet/main/installer/update_rc.local.sh
+sudo bash $HOME/installer/update_rclocal.sh 
 ############################## Link files #####################################
 # symlinks #TODO symlinks need to be added
 
