@@ -60,8 +60,8 @@ sudo apt-get install -y curl wget lynx w3m gnupg2 # ensure wget and curl are up 
 # --- Nodejs for web server --- #
 sudo curl -fsSL https://deb.nodesource.com/setup_17.x | bash -
 sudo apt-get install -y nodejs
-sudo npm install express
-sudo npm install -g nodemon
+#sudo npm install express
+#sudo npm install -g nodemon
 
 # --- python tools --- #
 sudo pip install argparse
