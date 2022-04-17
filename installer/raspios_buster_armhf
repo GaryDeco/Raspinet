@@ -17,6 +17,7 @@
 
 # Please add an issue if you encounter a bug
 ###########################################################################################
+GITURL="https://raw.githubusercontent.com/GaryDeco/Raspinet/main"
 
 function dispMsg() {
     whiptail --title "$1" --msgbox "$2" 10 40
@@ -110,9 +111,10 @@ sudo mkdir -p /etc/X11/xorg.conf.d/
 sudo cp /usr/share/raspi-config/10-blanking.conf /etc/X11/xorg.conf.d/
 printf "\\033[9;0]" >> /etc/issue
 ############################## rc.local ##################################
-OUTDIR=$HOME/raspinet
 
-sudo curl https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/wakeled.py > $OUTDIR/wakeled.py
+OUTDIR=$HOME/raspinet
+cd $OUTDIR
+sudo wget --no-check-certificate --content-disposition $GITURL/raspinet/wakeled.py  > $OUTDIR/wakeled.py
 sudo chmod 777 $OUTDIR/wakeled.py
 sudo chmod 777 /etc/rc.local
 
