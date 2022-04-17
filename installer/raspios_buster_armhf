@@ -18,7 +18,7 @@
 # Please add an issue if you encounter a bug
 ###########################################################################################
 GITURL="https://raw.githubusercontent.com/GaryDeco/Raspinet/main"
-
+sudo chmod 777 /etc/rc.local
 function dispMsg() {
     whiptail --title "$1" --msgbox "$2" 10 40
 }
@@ -111,40 +111,30 @@ sudo mkdir -p /etc/X11/xorg.conf.d/
 sudo cp /usr/share/raspi-config/10-blanking.conf /etc/X11/xorg.conf.d/
 printf "\\033[9;0]" >> /etc/issue
 ############################## rc.local ##################################
-
-OUTDIR=$HOME/raspinet
-cd $OUTDIR
-sudo wget --no-check-certificate --content-disposition $GITURL/raspinet/wakeled.py  > $OUTDIR/wakeled.py
-sudo chmod 777 $OUTDIR/wakeled.py
-sudo chmod 777 /etc/rc.local
-
-update_rclocal(){
+# modify as needed
+function update_rc.local(){
 cat << EOF
 #!/bin/sh -e
-#
 # rc.local
-#
-# This script is executed at the end of each multiuser runlevel.
-# Make sure that the script will "exit 0" on success or any other
-# value on error.
-#
-# In order to enable or disable this script just change the execution
-# bits.
-#
-# By default this script does nothing.
 
 # Print the IP address
-_IP=$(hostname -I) || true
-if [ "$_IP" ]; then
-  printf "My IP address is %s\n" "$_IP"
+_IP=192.168.68.74  || true
+if [ "" ]; then
+  printf "My IP address is %s\n" ""
 fi
-
-nohookup sudo python3 /home/dev/raspinet/wakeled.py >/dev/null 2>&1 &
+# Adds wake LED on boot
+echo "18" >/sys/class/gpio/export
+echo "out" >/sys/class/gpio/gpio18/direction
+echo "1" >/sys/class/gpio/gpio18/value
 exit 0
 EOF
 }
-update_rclocal > /etc/rc.local
-
+# write new rc.local 
+sudo chmod 777 /etc/rc.local
+update_rc.local > /etc/rc.local
+sleep 1
+#reduce permissions
+sudo chmod 755 /etc/rc/local
 ############################## Link files #####################################
 # symlinks #TODO symlinks need to be added
 
