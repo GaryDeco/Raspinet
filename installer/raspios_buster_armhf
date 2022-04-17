@@ -11,7 +11,7 @@
 # --- Switch to superuser --- #
 #$ sudo su
 # --- Fetch the build script --- #
-#$ wget --no-check-certificate --content-disposition https://raw.githubusercontent.com/Raspinet/main/installer/raspios_buster_armhf
+#$ wget --no-check-certificate --content-disposition https://raw.githubusercontent.com/GaryDeco/Raspinet/main/installer/raspios_buster_armhf
 # --- Run the build script --- #
 # sudo bash raspios_buster_armhf
 
@@ -60,6 +60,9 @@ sudo apt-get install -y curl wget lynx w3m gnupg2 # ensure wget and curl are up 
 # --- Nodejs for web server --- #
 sudo curl -fsSL https://deb.nodesource.com/setup_17.x | bash -
 sudo apt-get install -y nodejs
+sudo npm install express
+sudo npm install -g nodemon
+
 # --- python tools --- #
 sudo pip install argparse
 sudo pip install python-libnmap
@@ -139,14 +142,12 @@ sudo rm raspios_buster_armhf
 # fix_icon > /home/dev/Desktop/installer.desktop
 # sleep 1
 #--------------------------------------------------------------#
-if whiptail --title "RasPiNet Installer" --yesno "Do you want to install the metasploit CLI?" 10 40; then
-    sudo curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
-    sudo chmod +x msfinstall
-    sudo bash msfinstall
-    sudo mv msfinstall /home/dev/raspinet/installer/ 
-else
-    break
-fi
+
+sudo curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
+sudo chmod +x msfinstall
+sudo bash msfinstall
+sudo mv msfinstall /home/dev/raspinet/installer/ 
+
 
 
 # ------------- Adding RPi wake button script from my arcade project -------------- #
