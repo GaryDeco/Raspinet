@@ -154,7 +154,6 @@ get_file "nic_info.sh"
 get_file "piscan.sh"
 get_file "update_arp_cache.sh"
 
-
 #### Jobs ####
 JOB1="*/1 * * * * sudo /usr/bin/bash /home/dev/raspinet/ethled.sh &"
 echo "adding cronjob"
@@ -164,9 +163,6 @@ sleep 1
 echo "restarting service"
 sudo service cron start
 echo "service restarted"
-
-
-
 
 ############################## Link files #####################################
 # symlinks #TODO symlinks need to be added
