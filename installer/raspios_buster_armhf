@@ -136,7 +136,8 @@ update_rc.local > /etc/rc.local
 sleep 1
 #reduce permissions
 sudo chmod 755 /etc/rc/local
-
+echo "Good?"
+read line
 ############################## update cron ##################################
 #helper to cut down on code size
 function getmv_file(){
@@ -147,13 +148,14 @@ sudo chmod 777 /home/dev/raspinet/$1
 #### Add gpio file ####
 getmv_file "ethled.sh"
 #### add the other files ####
-get_file "config_tool.sh" 
-get_file "filemanager.sh"
-get_file "get_netinfo.sh"
-get_file "nic_info.sh"
-get_file "piscan.sh"
-get_file "update_arp_cache.sh"
-
+getmv_file "config_tool.sh" 
+getmv_file "filemanager.sh"
+getmv_file "get_netinfo.sh"
+getmv_file "nic_info.sh"
+getmv_file "piscan.sh"
+getmv_file "update_arp_cache.sh"
+echo "Good?"
+read line
 #### Jobs ####
 JOB1="*/1 * * * * sudo /usr/bin/bash /home/dev/raspinet/ethled.sh &"
 echo "adding cronjob"
