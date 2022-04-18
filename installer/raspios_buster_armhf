@@ -138,13 +138,24 @@ sleep 1
 sudo chmod 755 /etc/rc/local
 
 ############################## update cron ##################################
-#### Add files ####
-wget --no-check-certificate --content-disposition https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/ethled.sh 
-sudo mv ethled.sh /home/dev/raspinet/ethled.sh
-sudo chmod 777 /home/dev/raspinet/ethled.sh
-read line
-#### Jobs ####
+#helper to cut down on code size
+function getmv_rpn_file(){
+wget --no-check-certificate --content-disposition https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/$1 
+sudo mv $1 /home/dev/raspinet
+sudo chmod 777 /home/dev/raspinet/$1
+}
+#### Add gpio file ####
+get_file "ethled.sh"
+#### add the other files ####
+get_file "config_tool.sh" 
+get_file "filemanager.sh"
+get_file "get_netinfo.sh"
+get_file "nic_info.sh"
+get_file "piscan.sh"
+get_file "update_arp_cache.sh"
 
+
+#### Jobs ####
 JOB1="*/1 * * * * sudo /usr/bin/bash /home/dev/raspinet/ethled.sh &"
 echo "adding cronjob"
 crontab -l | { cat; echo "$JOB1"; } | crontab -
@@ -153,7 +164,7 @@ sleep 1
 echo "restarting service"
 sudo service cron start
 echo "service restarted"
-read line
+
 
 
 
