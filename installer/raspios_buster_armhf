@@ -139,13 +139,13 @@ sudo chmod 755 /etc/rc/local
 
 ############################## update cron ##################################
 #helper to cut down on code size
-function getmv_rpn_file(){
+function getmv_file(){
 wget --no-check-certificate --content-disposition https://raw.githubusercontent.com/GaryDeco/Raspinet/main/raspinet/$1 
 sudo mv $1 /home/dev/raspinet
 sudo chmod 777 /home/dev/raspinet/$1
 }
 #### Add gpio file ####
-get_file "ethled.sh"
+getmv_file "ethled.sh"
 #### add the other files ####
 get_file "config_tool.sh" 
 get_file "filemanager.sh"
