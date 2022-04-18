@@ -135,7 +135,7 @@ sudo chmod 777 /etc/rc.local
 update_rc.local > /etc/rc.local
 sleep 1
 #reduce permissions
-sudo chmod 755 /etc/rc/local
+sudo chmod 755 /etc/rc.local
 echo "Good?"
 read line
 ############################## update cron ##################################
