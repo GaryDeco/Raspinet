@@ -136,7 +136,7 @@ sudo chmod 755 /etc/rc.local
 ############################## configure node.js ##################################
 sudo mkdir /home/dev/nodejs
 sudo chmod 777 /home/dev/nodejs
-cd /home/dev/nodejs
+cd /home/dev/raspinet/nodejs
 sudo mkdir public # contains html rendered in webapp
 sudo mkdir views # contains javascript and css tagged in index.html
 sudo touch index.js # main entry point of app
@@ -145,7 +145,7 @@ sudo touch index.html # create index.html (if it does not exist)
 cd .. # back out to WebApp dir
 cd views # go into views dir
 sudo mkdir css # create css dir
-msudo kdir js # create js dir
+sudo mkdir js # create js dir
 cd .. # back to WebApp dir
 
 ############################## update cron ##################################
