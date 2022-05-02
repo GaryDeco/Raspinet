@@ -1,2 +1,92 @@
 #!/bin/bash
 
+RED="\033[1;31m"
+GREEN="\033[1;32m"
+BLUE="\033[1;36m"
+YELLOW="\033[1;33m"
+RESET="\033[0m"
+
+GITURL="https://raw.githubusercontent.com/GaryDeco/Raspinet/main"
+sudo chmod 777 /etc/rc.local
+rpn="${RED}[RasPiNet]${RESET}"
+
+is_root(){
+    if [[ $EUID > 0 ]]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+is_installed() {
+    if [ "$(dpkg -l "$1" 2> /dev/null | tail -n 1 | cut -d ' ' -f 1)" != "ii" ]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+is_ssh() {
+    if pstree -p | egrep --quiet --extended-regexp ".*sshd.*\($$\)"; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+get_debvers(){
+    ver=`cat /etc/debian_version | cut -d . -f 1`
+    echo $ver
+}
+
+get_user(){
+    echo $USER
+}
+
+get_ssh() {
+    if service ssh status | grep -q inactive; then
+        echo 1
+    else
+        echo 0
+    fi
+}
+
+enable_ssh(){
+    local ssh_status=disabled
+    if service ssh status | grep -q inactive; then
+        ssh_status=enabled
+        ssh-keygen -A &&
+        update-rc.d ssh enable &&
+        invoke-rc.d ssh start 
+    fi
+
+}
+
+do_rootssh(){
+    echo $ROOTSSH >> /etc/ssh/sshd_config
+    sudo service ssh restart 
+}
+
+get_blanking() {
+    if ! [ -f "/etc/X11/xorg.conf.d/10-blanking.conf" ]; then
+        echo 0
+    else
+        echo 1
+    fi
+}
+
+get_hostname() {
+    cat /etc/hostname | tr -d " \t\n\r"
+}
+
+do_hostname() {
+    CURRENT_HOSTNAME=`cat /etc/hostname | tr -d " \t\n\r"`
+    NEW_HOSTNAME=$1
+    echo $NEW_HOSTNAME > /etc/hostname
+    sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\t$NEW_HOSTNAME/g" /etc/hosts
+}
+
+do_change_pass() {
+  passwd $USER &&
+}
+

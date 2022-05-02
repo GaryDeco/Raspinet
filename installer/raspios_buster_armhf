@@ -19,9 +19,6 @@
 ###########################################################################################
 GITURL="https://raw.githubusercontent.com/GaryDeco/Raspinet/main"
 sudo chmod 777 /etc/rc.local
-function dispMsg() {
-    whiptail --title "$1" --msgbox "$2" 10 40
-}
 
 ################################# SSH ###################################
 # --- check is SSH is enabled, if not, install it. 
@@ -136,8 +133,21 @@ update_rc.local > /etc/rc.local
 sleep 1
 #reduce permissions
 sudo chmod 755 /etc/rc.local
-echo "Good?"
-read line
+############################## configure node.js ##################################
+sudo mkdir /home/dev/nodejs
+sudo chmod 777 /home/dev/nodejs
+cd /home/dev/nodejs
+sudo mkdir public # contains html rendered in webapp
+sudo mkdir views # contains javascript and css tagged in index.html
+sudo touch index.js # main entry point of app
+cd public # navigate into public dir
+sudo touch index.html # create index.html (if it does not exist)
+cd .. # back out to WebApp dir
+cd views # go into views dir
+sudo mkdir css # create css dir
+msudo kdir js # create js dir
+cd .. # back to WebApp dir
+
 ############################## update cron ##################################
 #helper to cut down on code size
 function getmv_file(){
@@ -154,10 +164,9 @@ getmv_file "get_netinfo.sh"
 getmv_file "nic_info.sh"
 getmv_file "piscan.sh"
 getmv_file "update_arp_cache.sh"
-echo "Good?"
-read line
 #### Jobs ####
 JOB1="*/1 * * * * sudo /usr/bin/bash /home/dev/raspinet/ethled.sh &"
+
 echo "adding cronjob"
 crontab -l | { cat; echo "$JOB1"; } | crontab -
 echo "cronjob added"
