@@ -134,8 +134,8 @@ sleep 1
 #reduce permissions
 sudo chmod 755 /etc/rc.local
 ############################## configure node.js ##################################
-sudo mkdir /home/dev/nodejs
-sudo chmod 777 /home/dev/nodejs
+sudo mkdir /home/dev/raspinet/nodejs
+sudo chmod 777 /home/dev/raspinet/nodejs
 cd /home/dev/raspinet/nodejs
 sudo mkdir public # contains html rendered in webapp
 sudo mkdir views # contains javascript and css tagged in index.html
