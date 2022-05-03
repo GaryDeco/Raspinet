@@ -146,7 +146,7 @@ cd .. # back out to WebApp dir
 cd views # go into views dir
 sudo mkdir css # create css dir
 sudo mkdir js # create js dir
-cd .. # back to WebApp dir
+cd  
 
 ############################## update cron ##################################
 #helper to cut down on code size
@@ -188,7 +188,8 @@ echo "service restarted"
 
 ############################### End of Config ##################################
 # final house keeping
-sudo rm raspios_buster_armhf
+sudo rm /home/dev/raspios_buster_armhf
+#-------------------------Just keeping for reference ------------------------------#
 # Fix for installer icon
 # function fix_icon(){
 # sudo chmod 777 /home/dev/Desktop/installer.desktop
@@ -207,7 +208,7 @@ sudo rm raspios_buster_armhf
 # }
 # fix_icon > /home/dev/Desktop/installer.desktop
 # sleep 1
-#--------------------------------------------------------------#
+#-------------------------Add metasploit (removed user choice) ----------------------------------#
 
 sudo curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
 sudo chmod +x msfinstall
@@ -217,14 +218,14 @@ sudo mv msfinstall /home/dev/raspinet/installer/
 
 
 # ------------- Adding RPi wake button script from my arcade project -------------- #
+cd /home/dev/raspinet/installer
 git clone https://github.com/GaryDeco/RetroPie-Power-Switch.git
 cd RetroPie-Power-Switch/script/
 bash install > /dev/null 2>&1
-echo
-cd /home/dev/raspinet
 sudo rm -rf /home/dev/RetroPie-Power-Switch/
+cd
 #--------------------------------------------------------------#
-clear
+
 if whiptail --title "RasPiNet Installer" --yesno "Install complete, Do you want to reboot now?" 10 40; then
     dispMsg "RasPiNet Installer" "Rebooting..."
     sudo reboot now
